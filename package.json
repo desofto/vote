@@ -7,7 +7,7 @@
     "client:start": "npm run start --prefix client",
     "client:build": "npm run build --prefix client",
     "server": "nodemon index.js --ignore client",
-    "test": "NODE_ENV=test mocha 'test/**/*-test.js' --reporter spec --timeout 500",
+    "test": "NODE_ENV=test mocha 'test/**/*-test.js' --reporter spec --timeout 500 --exit",
     "db:create": "npx sequelize-cli db:create",
     "db:drop": "npx sequelize-cli db:drop",
     "db:migrate": "npx sequelize-cli db:migrate",
@@ -30,7 +30,8 @@
     "nodemon": "^2.0.13",
     "path": "^0.12.7",
     "sequelize": "^6.6.5",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "chai": "^4.3.4",
