@@ -1,0 +1,46 @@
+defaults: &defaults
+  title: 'Vote System'
+  description: 'Description'
+  jwtSecret: 'kyrdy myrdy'
+
+development:
+  <<: *defaults
+  port: 8080
+  log:
+    level: 2
+  db:
+    username: root
+    password: ''
+    database: vote_development
+    host: 127.0.0.1
+    dialect: mysql
+  elasticsearch:
+    url: http://localhost:9200
+
+test:
+  <<: *defaults
+  port: 3030
+  log:
+    level: 5
+  db:
+    username: root
+    password: ''
+    database: vote_test
+    host: 127.0.0.1
+    dialect: mysql
+  elasticsearch:
+    url: http://localhost:9200
+
+production:
+  <<: *defaults
+  port: 80
+  log:
+    level: 4
+  db:
+    username: root
+    password: ''
+    database: vote_production
+    host: database
+    dialect: mysql
+  elasticsearch:
+    url: http://elasticsearch:9200
