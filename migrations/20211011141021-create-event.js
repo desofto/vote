@@ -2,25 +2,18 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Events', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         unique: true
-    },
-      fullName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
       },
-      accessCode: {
-        allowNull: false,
+      date: {
+        type: Sequelize.DATE
+      },
+      title: {
         type: Sequelize.STRING
-      },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +27,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users')
+    await queryInterface.dropTable('Events')
   }
 }

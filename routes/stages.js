@@ -1,0 +1,116 @@
+'use strict'
+
+const path = require('path')
+
+const errors = require(path.resolve('lib/errors'))
+const auth = require(path.resolve('lib/auth'))
+const abilities = require(path.resolve('lib/abilities'))
+const { permit } = require(path.resolve('lib/params'))
+const { Event, Stage, Vote } = require(path.resolve('models'))
+const { StageSerializer } = require(path.resolve('serializers'))
+
+const router = require('express').Router({ mergeParams: true })
+
+router.get('/', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.event_id, { include: ['stages'] })
+    abilities.authorize('read', event, req.currentUser)
+    const stages = event.stages
+    stages.forEach(stage => abilities.authorize('read', stage, req.currentUser))
+
+    res.status(200).json(
+      StageSerializer.serialize(stages)
+    )
+  } catch (e) {
+    errors.handler(req, res, e)
+  }
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.event_id, { include: ['stages'] })
+    abilities.authorize('read', event, req.currentUser)
+    const stage = await Stage.findOne({ where: { id: req.params.id, eventId: event.id }})
+    abilities.authorize('read', stage, req.currentUser)
+
+    res.status(200).json(
+      StageSerializer.serialize(stage)
+    )
+  } catch (e) {
+    errors.handler(req, res, e)
+  }
+})
+
+router.post('/', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.event_id)
+    abilities.authorize('read', event, req.currentUser)
+
+    const attributes = permit(req.body, ['title'])
+    const stage = await Stage.build(attributes)
+    stage.eventId = event.id
+    abilities.authorize('create', stage, req.currentUser)
+    await stage.save()
+
+    res.status(201).json(
+      StageSerializer.serialize(stage)
+    )
+  } catch (e) {
+    errors.handler(req, res, e)
+  }
+})
+
+router.put('/:id', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.event_id)
+    abilities.authorize('read', event, req.currentUser)
+    const stage = await Stage.findOne({ where: { id: req.params.id, eventId: event.id }})
+    abilities.authorize('update', stage, req.currentUser)
+
+    const attributes = permit(req.body, ['title'])
+    await stage.update(attributes)
+
+    res.status(200).json(
+      StageSerializer.serialize(stage)
+    )
+  } catch (e) {
+    errors.handler(req, res, e)
+  }
+})
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.event_id)
+    abilities.authorize('read', event, req.currentUser)
+    const stage = await Stage.findOne({ where: { id: req.params.id, eventId: event.id }})
+    abilities.authorize('delete', stage, req.currentUser)
+
+    await stage.destroy()
+
+    res.status(204).end()
+  } catch (e) {
+    errors.handler(req, res, e)
+  }
+})
+
+router.post('/:id/vote', async (req, res) => {
+  try {
+    const event = await Event.findByPk(req.params.event_id)
+    const stage = await Stage.findOne({ where: { id: req.params.id, eventId: event.id }})
+
+    let vote = await Vote.findOne({ where: { stageId: stage.id, userId: req.currentUser.id }})
+    if (!vote) {
+      vote = await Vote.build({ stageId: stage.id, userId: req.currentUser.id, count: 0 })
+    }
+    vote.count++
+
+    abilities.authorize('create', vote, req.currentUser)
+    await vote.save()
+
+    res.status(204).end()
+  } catch (e) {
+    errors.handler(req, res, e)
+  }
+})
+
+module.exports = router

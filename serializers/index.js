@@ -1,5 +1,7 @@
 'use strict'
 
 module.exports = {
-  UserSerializer: require('./user')
+  UserSerializer: require('./user'),
+  EventSerializer: require('./event'),
+  StageSerializer: require('./stage')
 }

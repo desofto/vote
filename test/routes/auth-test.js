@@ -1,7 +1,5 @@
 'use strict'
 
-process.env.NODE_ENV = 'test'
-
 const path = require('path')
 
 const chai = require('chai')
@@ -13,12 +11,11 @@ const app = require(path.resolve('index'))
 
 const { User } = require(path.resolve('models'))
 
+const { clearDatabase } = require(path.resolve('test/helper'))
+
 describe('Auth', async () => {
   beforeEach(async () => {
-    await User.destroy({
-      where: {},
-      truncate: true
-    })
+    await clearDatabase()
   })
 
   describe('POST /auth', async () => {

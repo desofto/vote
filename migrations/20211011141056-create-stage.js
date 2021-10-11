@@ -2,25 +2,36 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Stages', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         unique: true
-    },
-      fullName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
       },
-      accessCode: {
+      eventId: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: 'Events',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      title: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
+      order: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      state: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 'initial'
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +45,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users')
+    await queryInterface.dropTable('Stages')
   }
 }

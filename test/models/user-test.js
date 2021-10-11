@@ -5,12 +5,11 @@ const { expect } = require('chai')
 
 const { User } = require(path.resolve('models'))
 
+const { clearDatabase } = require(path.resolve('test/helper'))
+
 describe('User', async () => {
   beforeEach(async () => {
-    await User.destroy({
-      where: {},
-      truncate: true
-    })
+    await clearDatabase()
   })
 
   describe('#accessCode', async () => {

@@ -5,6 +5,7 @@ const path = require('path')
 const errors = require(path.resolve('lib/errors'))
 const auth = require(path.resolve('lib/auth'))
 const abilities = require(path.resolve('lib/abilities'))
+const { permit } = require(path.resolve('lib/params'))
 const { User } = require(path.resolve('models'))
 const { UserSerializer } = require(path.resolve('serializers'))
 
@@ -26,7 +27,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const user = await User.find(req.params.id)
+    const user = await User.findByPk(req.params.id)
     abilities.authorize('read', user, req.currentUser)
 
     res.status(200).json(
@@ -39,7 +40,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const user = await User.build(req.body)
+    const attributes = permit(req.body, ['fullName', 'accessCode', 'isAdmin'])
+    const user = await User.build(attributes)
     abilities.authorize('create', user, req.currentUser)
     await user.save()
 
@@ -56,10 +58,10 @@ router.put('/:id', async (req, res) => {
     const user = await User.find(req.params.id)
     abilities.authorize('update', user, req.currentUser)
 
-    const attributes = (({ fullName, accessCode, isAdmin }) => ({ fullName, accessCode, isAdmin }))(req.body)
+    const attributes = permit(req.body, ['fullName', 'accessCode', 'isAdmin'])
     await user.update(attributes)
 
-    res.status(201).json(
+    res.status(200).json(
       UserSerializer.serialize(user)
     )
   } catch (e) {
@@ -69,10 +71,10 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const user = await User.find(req.params.id)
+    const user = await User.findByPk(req.params.id)
     if (user) {
       abilities.authorize('delete', user, req.currentUser)
-      user.destroy()
+      await user.destroy()
     }
 
     res.status(204).end()
