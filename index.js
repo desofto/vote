@@ -40,6 +40,11 @@ const config = require(path.resolve('config'))
     const app = express()
     app.use(express.json({ extended: true }))
 
+    const cors = require('cors')
+    app.use(cors({
+      origin: "http://localhost:3000"
+    }))
+
     app.engine('html', require('ejs').__express)
     app.set('views', path.join(__dirname, 'views'))
     app.set('view engine', 'html')
