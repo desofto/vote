@@ -14,7 +14,7 @@ function App() {
       <>
         <button onClick={() => actions.currentUser.logout(dispatch)()}>Logout</button>
         {
-          currentUser.is_admin
+          currentUser.isAdmin
           ? <Admin />
           : <User />
         }
