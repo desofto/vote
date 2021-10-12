@@ -10,7 +10,9 @@ function login(dispatch) {
       body: JSON.stringify({ code: code })
     })
 
-    const { token, id, full_name } = res.body
+    const body = await res.json()
+
+    const { token, id, full_name } = body
 
     dispatch({ type: UPDATE, payload: { token, id, fullName: full_name } })
   }
