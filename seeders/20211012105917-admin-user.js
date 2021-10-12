@@ -4,7 +4,7 @@ const { User } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const user = await User.create({ fullName: 'Main Admin' })
+    const user = await User.create({ fullName: 'Main Admin', isAdmin: true })
     console.log('Access code:', user.accessCode)
   },
 
