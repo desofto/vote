@@ -1,13 +1,24 @@
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducers from './reducers'
+import { useSelector } from 'react-redux'
+
+import Login from './Login'
 
 function App() {
-  const store = createStore(reducers)
+  const currentUser = useSelector(store => store.currentUser)
 
   return (
-    <Provider store={store}>
-    </Provider>
+    <>
+      {
+        currentUser.token
+        ? <Dashboard />
+        : <Login />
+      }
+    </>
+  )
+}
+
+function Dashboard() {
+  return (
+    <></>
   )
 }
 

@@ -17,7 +17,9 @@ router.post('/', async (req, res) => {
     }
 
     res.status(200).json({
-      token: auth.create({ id: user.id })
+      token: auth.create({ id: user.id }),
+      id: user.id,
+      full_name: user.fullName
     })
   } catch (e) {
     errors.handler(req, res, e)
