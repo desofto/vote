@@ -7,6 +7,7 @@ module.exports = new Serializer('users', {
   attributes: [
     'id',
     'fullName',
+    'accessCode',
     'isAdmin',
     'createdAt',
     'updatedAt'

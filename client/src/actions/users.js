@@ -1,4 +1,4 @@
-import { UPDATE } from '../reducers/events'
+import { UPDATE } from '../reducers/users'
 
 import store from '../store'
 
@@ -6,7 +6,7 @@ function load(dispatch) {
   return async function () {
     const state = store.getState()
 
-    const res = await fetch('/events', {
+    const res = await fetch('/users', {
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
         'Content-Type': 'application/json'
@@ -14,12 +14,13 @@ function load(dispatch) {
     })
 
     const body = await res.json()
-    const events = body.data.map(e => ({
-      title: e.attributes.title,
-      date: e.attributes.date
+    const users = body.data.map(e => ({
+      fullName: e.attributes.full_name,
+      accessCode: e.attributes.access_code,
+      isAdmin: e.attributes.is_admin
     }))
 
-    dispatch({ type: UPDATE, payload: events })
+    dispatch({ type: UPDATE, payload: users })
   }
 }
 
@@ -27,15 +28,15 @@ function add(dispatch) {
   return async function (attributes) {
     const state = store.getState()
 
-    await fetch('/events', {
+    await fetch('/users', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        title: attributes.title,
-        date: attributes.date
+        full_name: attributes.fullName,
+        is_admin: attributes.isAdmin
       })
     })
 
@@ -47,7 +48,7 @@ function remove(dispatch) {
   return async function (id) {
     const state = store.getState()
 
-    await fetch(`/events/${id}`, {
+    await fetch(`/users/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,

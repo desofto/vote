@@ -40,8 +40,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const attributes = permit(req.body, ['fullName', 'accessCode', 'isAdmin'])
-    const user = await User.build(attributes)
+    const attributes = permit(req.body, ['full_name', 'access_code', 'is_admin'])
+    const user = await User.build({
+      fullName: attributes.full_name,
+      accessCode: attributes.access_code,
+      isAdmin: !!attributes.is_admin
+    })
     abilities.authorize('create', user, req.currentUser)
     await user.save()
 
@@ -58,8 +62,12 @@ router.put('/:id', async (req, res) => {
     const user = await User.find(req.params.id)
     abilities.authorize('update', user, req.currentUser)
 
-    const attributes = permit(req.body, ['fullName', 'accessCode', 'isAdmin'])
-    await user.update(attributes)
+    const attributes = permit(req.body, ['full_name', 'access_code', 'is_admin'])
+    await user.update({
+      fullName: attributes.full_name,
+      accessCode: attributes.access_code,
+      isAdmin: !!attributes.is_admin
+    })
 
     res.status(200).json(
       UserSerializer.serialize(user)
