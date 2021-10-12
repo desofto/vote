@@ -63,7 +63,7 @@ describe('/users', async () => {
 
       const token = await signin(app, true)
 
-      const attribnutes = { fullName: 'qwerty', isAdmin: false }
+      const attribnutes = { full_name: 'qwerty', is_admin: false }
       const res = await chai.request(app).post('/users').set('Authorization', `Bearer ${token}`).send(attribnutes)
 
       expect(res.status).to.eql(201)
