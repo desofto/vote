@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import Login from './Login'
-import User from './User'
-import Admin from './Admin'
+import User from './user'
+import Admin from './admin'
 import actions from './actions'
 
 function App() {
