@@ -3,5 +3,6 @@
 module.exports = {
   UserSerializer: require('./user'),
   EventSerializer: require('./event'),
-  StageSerializer: require('./stage')
+  StageSerializer: require('./stage'),
+  TeamSerializer: require('./team')
 }

@@ -91,6 +91,6 @@ const config = require(path.resolve('config'))
     module.exports = server
   } catch (error) {
     logger.error('Unable to connect to the database:', error)
-    throw error
+    console.log(error)
   }
 })()

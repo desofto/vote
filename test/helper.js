@@ -1,12 +1,13 @@
 const path = require('path')
 const chai = require('chai')
 
-const { User, Event, Stage, Vote } = require(path.resolve('models'))
+const { User, Event, Stage, Team, Vote } = require(path.resolve('models'))
 
 async function clearDatabase() {
   await User.destroy({ where: {} })
   await Event.destroy({ where: {} })
   await Stage.destroy({ where: {} })
+  await Team.destroy({ where: {} })
   await Vote.destroy({ where: {} })
 }
 

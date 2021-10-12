@@ -9,7 +9,7 @@ chai.use(chaiHttp)
 
 const app = require(path.resolve('index'))
 
-const { Event, Stage, Vote } = require(path.resolve('models'))
+const { Event, Stage, Team, Vote } = require(path.resolve('models'))
 
 const { clearDatabase, signin } = require(path.resolve('test/helper'))
 
@@ -83,9 +83,10 @@ describe('Stages', async () => {
 
       const event = await Event.create({ title: 'qwerty', date: new Date() })
       const stage = await Stage.create({ title: 'qwe', eventId: event.id })
+      const team = await Team.create({ title: 'qwe', eventId: event.id })
 
       {
-        const res = await chai.request(app).post(`/events/${event.id}/stages/${stage.id}/vote`).set('Authorization', `Bearer ${token}`).send({})
+        const res = await chai.request(app).post(`/events/${event.id}/stages/${stage.id}/vote`).set('Authorization', `Bearer ${token}`).send({ team_id: team.id })
 
         expect(res.status).to.eql(204)
         expect(await Vote.count()).to.eql(1)
@@ -95,7 +96,7 @@ describe('Stages', async () => {
       }
 
       {
-        const res = await chai.request(app).post(`/events/${event.id}/stages/${stage.id}/vote`).set('Authorization', `Bearer ${token}`).send({})
+        const res = await chai.request(app).post(`/events/${event.id}/stages/${stage.id}/vote`).set('Authorization', `Bearer ${token}`).send({ team_id: team.id })
 
         expect(res.status).to.eql(204)
         expect(await Vote.count()).to.eql(1)

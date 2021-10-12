@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID
     },
 
+    teamId: {
+      type: DataTypes.UUID
+    },
+
     userId: {
       type: DataTypes.UUID
     },

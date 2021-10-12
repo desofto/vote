@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
       this.hasMany(models.Stage, { as: 'stages' })
+      this.hasMany(models.Team, { as: 'teams' })
     }
   }
 
