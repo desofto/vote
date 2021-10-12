@@ -13,7 +13,7 @@ const { User } = require(path.resolve('models'))
 
 const { clearDatabase } = require(path.resolve('test/helper'))
 
-describe('Auth', async () => {
+describe('/auth', async () => {
   beforeEach(async () => {
     await clearDatabase()
   })

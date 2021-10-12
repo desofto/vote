@@ -13,7 +13,7 @@ const { Event, Stage, Team, Vote } = require(path.resolve('models'))
 
 const { clearDatabase, signin } = require(path.resolve('test/helper'))
 
-describe('Teams', async () => {
+describe('/teams', async () => {
   beforeEach(async () => {
     await clearDatabase()
   })

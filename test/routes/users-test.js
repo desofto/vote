@@ -13,7 +13,7 @@ const { User } = require(path.resolve('models'))
 
 const { clearDatabase, signin } = require(path.resolve('test/helper'))
 
-describe('Users', async () => {
+describe('/users', async () => {
   beforeEach(async () => {
     await clearDatabase()
   })

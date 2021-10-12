@@ -13,7 +13,7 @@ const { Event } = require(path.resolve('models'))
 
 const { clearDatabase, signin } = require(path.resolve('test/helper'))
 
-describe('Events', async () => {
+describe('/events', async () => {
   beforeEach(async () => {
     await clearDatabase()
   })
