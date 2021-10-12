@@ -1,7 +1,9 @@
 import * as currentUser from './current-user'
+import * as events from './events'
 
 const actions = {
-  currentUser
+  currentUser,
+  events
 }
 
 export default actions
