@@ -26,9 +26,7 @@ function logout(dispatch) {
 
 function checkStatus(dispatch) {
   return function (code) {
-    if (code !== 401) {
-      return true
-    }
+    if (code !== 401) return true
     logout(dispatch)()
   }
 }
