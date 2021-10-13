@@ -4,17 +4,33 @@ import { useDispatch, useSelector } from 'react-redux'
 import actions from '../actions'
 
 function Admin() {
-  const [tab, setTab] = useState('events')
-
   const [selectedEventId, setSelectedEventId] = useState(null)
 
   function EventSelected() {
+    const [tab, setTab] = useState('stages')
+    
     return (
-      <div></div>
+      <>
+        <button onClick={() => setSelectedEventId(null)}>&lt;</button>
+        <Tabs
+          activeKey={tab}
+          onSelect={tab => setTab(tab)}
+          className="mb-3"
+        >
+          <Tab eventKey="stages" title="Stages">
+            <Stages />
+          </Tab>
+          <Tab eventKey="teams" title="Teams">
+            <Teams />
+          </Tab>
+        </Tabs>
+      </>
     )
   }
 
   function EventNotSelected() {
+    const [tab, setTab] = useState('events')
+
     return (
       <Tabs
         activeKey={tab}
@@ -58,6 +74,11 @@ function Events({ onSelect }) {
     setEvent(EMPTY_EVENT)
   }
 
+  function openEvent(e, id) {
+    e.preventDefault()
+    onSelect(id)
+  }
+
   return (
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
@@ -73,8 +94,10 @@ function Events({ onSelect }) {
       <div>
         {
           events.map(event => (
-            <div key={event.id} onClick={() => onSelect(event.id)}>
-              {event.title}
+            <div key={event.id}>
+              <a href="" onClick={e => openEvent(e, event.id)}>
+                {event.title}
+              </a>
             </div>
           ))
         }
