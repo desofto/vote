@@ -6,23 +6,43 @@ import actions from '../actions'
 function Admin() {
   const [tab, setTab] = useState('events')
 
+  const [selectedEventId, setSelectedEventId] = useState(null)
+
+  function EventSelected() {
+    return (
+      <div></div>
+    )
+  }
+
+  function EventNotSelected() {
+    return (
+      <Tabs
+        activeKey={tab}
+        onSelect={tab => setTab(tab)}
+        className="mb-3"
+      >
+        <Tab eventKey="events" title="Events">
+          <Events onSelect={id => setSelectedEventId(id)} />
+        </Tab>
+        <Tab eventKey="users" title="Users">
+          <Users />
+        </Tab>
+      </Tabs>
+    )
+  }
+
   return (
-    <Tabs
-      activeKey={tab}
-      onSelect={tab => setTab(tab)}
-      className="mb-3"
-    >
-      <Tab eventKey="events" title="Events">
-        <Events />
-      </Tab>
-      <Tab eventKey="users" title="Users">
-        <Users />
-      </Tab>
-    </Tabs>
+    <>
+      {
+        selectedEventId
+        ? <EventSelected />
+        : <EventNotSelected />
+      }
+    </>
   )
 }
 
-function Events() {
+function Events({ onSelect }) {
   const EMPTY_EVENT = { title: '', date: '' }
   const events = useSelector(store => store.events)
   const [event, setEvent] = useState(EMPTY_EVENT)
@@ -53,7 +73,7 @@ function Events() {
       <div>
         {
           events.map(event => (
-            <div>
+            <div key={event.id} onClick={() => onSelect(event.id)}>
               {event.title}
             </div>
           ))
@@ -107,7 +127,7 @@ function Users() {
       <div>
         {
           users.map(user => (
-            <div>
+            <div key={user.id}>
               {user.fullName}
               {user.accessCode}
               {user.isAdmin}
