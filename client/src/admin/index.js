@@ -8,7 +8,7 @@ function Admin() {
 
   function EventSelected() {
     const [tab, setTab] = useState('stages')
-    
+
     return (
       <>
         <button onClick={() => setSelectedEventId(null)}>&lt;</button>

@@ -17,6 +17,8 @@ function load(dispatch) {
     if (!actions.currentUser.checkStatus(dispatch)(res.status)) return
 
     const body = await res.json()
+    if (!body.data) return
+
     const users = body.data.map(e => ({
       id: e.attributes.id,
       fullName: e.attributes.full_name,

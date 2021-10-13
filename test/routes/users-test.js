@@ -25,13 +25,13 @@ describe('/users', async () => {
       expect(res.status).to.eql(401)
     })
 
-    it('fails for regular use', async () => {
+    it('fails for regular user', async () => {
       const token = await signin(app, false)
 
       await User.create({ fullName: 'rty', isAdmin: true })
       const res = await chai.request(app).get('/users').set('Authorization', `Bearer ${token}`)
 
-      expect(res.status).to.eql(401)
+      expect(res.status).to.eql(403)
     })
 
     it('it returns all users', async () => {

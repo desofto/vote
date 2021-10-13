@@ -10,6 +10,7 @@ const { Event, Stage, Team, Vote } = require(path.resolve('models'))
 const { TeamSerializer } = require(path.resolve('serializers'))
 
 const router = require('express').Router({ mergeParams: true })
+router.use(auth.authenticate)
 
 router.get('/', async (req, res) => {
   try {
