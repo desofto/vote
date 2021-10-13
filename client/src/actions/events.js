@@ -18,6 +18,7 @@ function load(dispatch) {
 
     const body = await res.json()
     const events = body.data.map(e => ({
+      id: e.attributes.id,
       title: e.attributes.title,
       date: e.attributes.date
     }))

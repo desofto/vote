@@ -18,6 +18,7 @@ function load(dispatch) {
 
     const body = await res.json()
     const users = body.data.map(e => ({
+      id: e.attributes.id,
       fullName: e.attributes.full_name,
       accessCode: e.attributes.access_code,
       isAdmin: e.attributes.is_admin
