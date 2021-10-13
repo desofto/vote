@@ -18,10 +18,10 @@ function Admin() {
           className="mb-3"
         >
           <Tab eventKey="stages" title="Stages">
-            <Stages />
+            <Stages eventId={selectedEventId} />
           </Tab>
           <Tab eventKey="teams" title="Teams">
-            <Teams />
+            <Teams eventId={selectedEventId} />
           </Tab>
         </Tabs>
       </>
@@ -125,15 +125,125 @@ function Events({ onSelect }) {
   )
 }
 
-function Stages() {
+function Stages({ eventId }) {
+  const EMPTY_STAGE = { title: '' }
+  const stages = useSelector(store => store.stages)
+  const [stage, setStage] = useState(EMPTY_STAGE)
+  const dispatch = useDispatch()
+
+  useEffect(async function() {
+    await actions.stages.load(dispatch)(eventId)
+  }, [dispatch])
+
+  async function create(e) {
+    e.preventDefault()
+    await actions.stages.add(dispatch)(eventId, stage)
+    setStage(EMPTY_STAGE)
+  }
+
   return (
-    <div>Stages</div>
+    <div className="d-flex flex-column px-3">
+      <div className="d-flex">
+        <div className="flex-grow-1">Stages</div>
+        <div>
+          <label className="me-1">New stage:</label>
+          <input className="me-1" type="text" value={stage.title} onChange={e => setStage({ ...stage, title: e.target.value })} />
+          <input type="submit" value="add" onClick={create} />
+        </div>
+      </div>
+
+      <div>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Order</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              stages.map((stage, index) => (
+                <tr key={stage.id}>
+                  <td>
+                    {index+1}
+                  </td>
+                  <td>
+                    {stage.title}
+                  </td>
+                  <td>
+                    {stage.order}
+                  </td>
+                  <td>
+                    {stage.state}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+      </div>
+    </div>
   )
 }
 
-function Teams() {
+function Teams({ eventId }) {
+  const EMPTY_TEAM = { title: '' }
+  const teams = useSelector(store => store.teams)
+  const [team, setTeam] = useState(EMPTY_TEAM)
+  const dispatch = useDispatch()
+
+  useEffect(async function() {
+    await actions.teams.load(dispatch)(eventId)
+  }, [dispatch])
+
+  async function create(e) {
+    e.preventDefault()
+    await actions.teams.add(dispatch)(eventId, team)
+    setTeam(EMPTY_TEAM)
+  }
+
   return (
-    <div>Teams</div>
+    <div className="d-flex flex-column px-3">
+      <div className="d-flex">
+        <div className="flex-grow-1">Teams</div>
+        <div>
+          <label className="me-1">New team:</label>
+          <input className="me-1" type="text" value={team.title} onChange={e => setTeam({ ...team, title: e.target.value })} />
+          <input type="submit" value="add" onClick={create} />
+        </div>
+      </div>
+
+      <div>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              teams.map((team, index) => (
+                <tr key={team.id}>
+                  <td>
+                    {index+1}
+                  </td>
+                  <td>
+                    {team.title}
+                  </td>
+                  <td>
+                    {team.state}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+      </div>
+    </div>
   )
 }
 

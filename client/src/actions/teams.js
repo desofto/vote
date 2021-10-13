@@ -4,10 +4,10 @@ import actions from '.'
 import store from '../store'
 
 function load(dispatch) {
-  return async function () {
+  return async function (eventId) {
     const state = store.getState()
 
-    const res = await fetch('/teams', {
+    const res = await fetch(`/events/${eventId}/teams`, {
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
         'Content-Type': 'application/json'
@@ -28,10 +28,10 @@ function load(dispatch) {
 }
 
 function add(dispatch) {
-  return async function (attributes) {
+  return async function (eventId, attributes) {
     const state = store.getState()
 
-    await fetch('/teams', {
+    await fetch(`/events/${eventId}/teams`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
@@ -43,15 +43,15 @@ function add(dispatch) {
       })
     })
 
-    load(dispatch)()
+    load(dispatch)(eventId)
   }
 }
 
 function remove(dispatch) {
-  return async function (id) {
+  return async function (eventId, id) {
     const state = store.getState()
 
-    await fetch(`/teams/${id}`, {
+    await fetch(`/events/${eventId}/teams/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
@@ -59,7 +59,7 @@ function remove(dispatch) {
       }
     })
 
-    load(dispatch)()
+    load(dispatch)(eventId)
   }
 }
 
