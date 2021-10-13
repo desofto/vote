@@ -1,5 +1,6 @@
 import { UPDATE } from '../reducers/users'
 
+import actions from '.'
 import store from '../store'
 
 function load(dispatch) {
@@ -12,6 +13,8 @@ function load(dispatch) {
         'Content-Type': 'application/json'
       }
     })
+
+    if (!actions.currentUser.checkStatus(dispatch)(res.status)) return
 
     const body = await res.json()
     const users = body.data.map(e => ({

@@ -24,4 +24,13 @@ function logout(dispatch) {
   }
 }
 
-export { login, logout }
+function checkStatus(dispatch) {
+  return async function (code) {
+    if (code !== 401) {
+      return true
+    }
+    logout(dispatch)()
+  }
+}
+
+export { login, logout, checkStatus }
