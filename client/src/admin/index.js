@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Tabs, Tab } from 'react-bootstrap'
+import { Tabs, Tab, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from '../actions'
 
@@ -92,15 +92,34 @@ function Events({ onSelect }) {
       </div>
 
       <div>
-        {
-          events.map(event => (
-            <div key={event.id}>
-              <a href="" onClick={e => openEvent(e, event.id)}>
-                {event.title}
-              </a>
-            </div>
-          ))
-        }
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              events.map((event, index) => (
+                <tr key={event.id}>
+                  <td>
+                    {index+1}
+                  </td>
+                  <td>
+                    <a href="" onClick={e => openEvent(e, event.id)}>
+                      {event.title}
+                    </a>
+                  </td>
+                  <td>
+                    {new Date(event.date).toLocaleDateString('fr-CA')}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
       </div>
     </div>
   )
@@ -148,15 +167,28 @@ function Users() {
       </div>
 
       <div>
-        {
-          users.map(user => (
-            <div key={user.id}>
-              {user.fullName}
-              {user.accessCode}
-              {user.isAdmin}
-            </div>
-          ))
-        }
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Full Name</th>
+              <th>Access Code</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              users.map((user, index) => (
+                <tr key={user.id}>
+                  <td>{index+1}</td>
+                  <td>{user.fullName}</td>
+                  <td>{user.accessCode}</td>
+                  <td>{user.isAdmin ? 'admin' : 'user'}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
       </div>
     </div>
   )
