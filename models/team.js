@@ -29,12 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       type: Sequelize.STRING
     },
 
-    order: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-      defaultValue: 0
-    },
-
     eventId: {
       type: DataTypes.UUID
     },

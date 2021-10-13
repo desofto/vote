@@ -8,7 +8,6 @@ module.exports = new Serializer('teams', {
   attributes: [
     'id',
     'title',
-    'order',
     'state',
     'createdAt',
     'updatedAt'

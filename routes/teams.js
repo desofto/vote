@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     const event = await Event.findByPk(req.params.event_id)
     abilities.authorize('read', event, req.currentUser)
 
-    const attributes = permit(req.body, ['title'])
+    const attributes = permit(req.body, ['title', 'state'])
     const team = await Team.build(attributes)
     team.eventId = event.id
     abilities.authorize('create', team, req.currentUser)
@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
     const team = await Team.findOne({ where: { id: req.params.id, eventId: event.id }})
     abilities.authorize('update', team, req.currentUser)
 
-    const attributes = permit(req.body, ['title'])
+    const attributes = permit(req.body, ['title', 'state'])
     await team.update(attributes)
 
     res.status(200).json(
