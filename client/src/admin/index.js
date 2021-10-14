@@ -5,9 +5,9 @@ import actions from '../actions'
 
 function ControlledState({ state, onChange }) {
   const ICONS = {
-    initial: 'fa-play-circle',
-    started: 'fa-stop-circle',
-    finished: 'fa-check-circle'
+    initial: 'fas fa-play',
+    started: 'fas fa-stop',
+    finished: 'fas fa-check'
   }
 
   const NEXT_STATE = {
@@ -17,8 +17,8 @@ function ControlledState({ state, onChange }) {
   }
   return (
     <>
-      <Button variant="outline-dark" onClick={() => onChange(NEXT_STATE[state])}>
-        <i className={`far ${ICONS[state]}`}></i>
+      <Button className="rounded-circle" variant="outline-dark" onClick={() => onChange(NEXT_STATE[state])}>
+        <i className={ICONS[state]}></i>
       </Button>
     </>
   )
