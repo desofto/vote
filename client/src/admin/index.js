@@ -87,7 +87,7 @@ function Events({ onSelect }) {
           <label className="me-1">New event:</label>
           <input className="me-1" type="text" value={event.title} onChange={e => setEvent({ ...event, title: e.target.value })} />
           <input className="me-1" type="date" value={event.date} onChange={e => setEvent({ ...event, date: e.target.value })} />
-          <input type="submit" value="add" onClick={create} />
+          <input type="submit" value="&#xf067;" className="fa" onClick={create} />
         </div>
       </div>
 
@@ -98,6 +98,7 @@ function Events({ onSelect }) {
               <th>#</th>
               <th>Title</th>
               <th>Date</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -114,6 +115,9 @@ function Events({ onSelect }) {
                   </td>
                   <td>
                     {new Date(event.date).toLocaleDateString('fr-CA')}
+                  </td>
+                  <td>
+                    <i className="far fa-trash-alt"></i>
                   </td>
                 </tr>
               ))
@@ -272,7 +276,7 @@ function Users() {
           <input className="me-1" type="text" value={user.fullName} onChange={e => setUser({ ...user, fullName: e.target.value })} />
           <label className="me-1">Admin?</label>
           <input className="me-1" type="checkbox" value={user.isAdmin} onChange={e => setUser({ ...user, isAdmin: e.target.value })} />
-          <input type="submit" value="add" onClick={create} />
+          <input type="submit" value="&#xf234;" className="fa" onClick={create} />
         </div>
       </div>
 
