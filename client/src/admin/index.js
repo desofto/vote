@@ -187,7 +187,7 @@ function Events({ onSelect }) {
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
         <div className="flex-grow-1">Events</div>
-        <div>
+        <div className="mb-3">
           <NewEvent />
         </div>
       </div>
@@ -233,19 +233,53 @@ function Events({ onSelect }) {
 }
 
 function Stages({ eventId }) {
-  const EMPTY_STAGE = { title: '' }
   const stages = useSelector(store => store.stages)
-  const [stage, setStage] = useState(EMPTY_STAGE)
   const dispatch = useDispatch()
 
   useEffect(async function() {
     await actions.stages.load(dispatch)(eventId)
   }, [dispatch])
 
-  async function create(e) {
-    e.preventDefault()
-    await actions.stages.add(dispatch)(eventId, stage)
-    setStage(EMPTY_STAGE)
+  function NewStage() {
+    const [show, setShow] = useState(false)
+    const EMPTY_STAGE = { title: '' }
+    const [stage, setStage] = useState(EMPTY_STAGE)
+
+    async function create(e) {
+      e.preventDefault()
+      await actions.stages.add(dispatch)(eventId, stage)
+      setStage(EMPTY_STAGE)
+    }
+
+    return (
+      <>
+        <Button variant="primary" onClick={() => setShow(true)}>
+          <i className="fas fa-plus"></i>
+        </Button>
+
+        <Modal show={show} onHide={() => setShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create a new Stage</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>New stage:</Form.Label>
+                <Form.Control type="text" value={stage.title} onChange={e => setStage({ ...stage, title: e.target.value })} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={create}>
+              Create
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
   }
 
   async function remove(id) {
@@ -260,10 +294,8 @@ function Stages({ eventId }) {
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
         <div className="flex-grow-1">Stages</div>
-        <div>
-          <label className="me-1">New stage:</label>
-          <input className="me-1" type="text" value={stage.title} onChange={e => setStage({ ...stage, title: e.target.value })} />
-          <input type="submit" value="add" onClick={create} />
+        <div className="mb-3">
+          <NewStage />
         </div>
       </div>
 
@@ -311,19 +343,53 @@ function Stages({ eventId }) {
 }
 
 function Teams({ eventId }) {
-  const EMPTY_TEAM = { title: '' }
   const teams = useSelector(store => store.teams)
-  const [team, setTeam] = useState(EMPTY_TEAM)
   const dispatch = useDispatch()
 
   useEffect(async function() {
     await actions.teams.load(dispatch)(eventId)
   }, [dispatch])
 
-  async function create(e) {
-    e.preventDefault()
-    await actions.teams.add(dispatch)(eventId, team)
-    setTeam(EMPTY_TEAM)
+  function NewTeam() {
+    const [show, setShow] = useState(false)
+    const EMPTY_TEAM = { title: '' }
+    const [team, setTeam] = useState(EMPTY_TEAM)
+
+    async function create(e) {
+      e.preventDefault()
+      await actions.teams.add(dispatch)(eventId, team)
+      setTeam(EMPTY_TEAM)
+    }
+
+    return (
+      <>
+        <Button variant="primary" onClick={() => setShow(true)}>
+          <i className="fas fa-plus"></i>
+        </Button>
+
+        <Modal show={show} onHide={() => setShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create a new Team</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>New team:</Form.Label>
+                <Form.Control type="text" value={team.title} onChange={e => setTeam({ ...team, title: e.target.value })} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={create}>
+              Create
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
   }
 
   async function remove(id) {
@@ -338,10 +404,8 @@ function Teams({ eventId }) {
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
         <div className="flex-grow-1">Teams</div>
-        <div>
-          <label className="me-1">New team:</label>
-          <input className="me-1" type="text" value={team.title} onChange={e => setTeam({ ...team, title: e.target.value })} />
-          <input type="submit" value="add" onClick={create} />
+        <div className="mb-3">
+          <NewTeam />
         </div>
       </div>
 
@@ -446,7 +510,7 @@ function Users() {
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
         <div className="flex-grow-1">Users</div>
-        <div>
+        <div className="mb-3">
           <NewUser />
         </div>
       </div>

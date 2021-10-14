@@ -34,7 +34,7 @@ function add(dispatch) {
   return async function (eventId, attributes) {
     const state = store.getState()
 
-    await fetch(`/events/${eventId}/stages`, {
+    const res = await fetch(`/events/${eventId}/stages`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
@@ -47,7 +47,15 @@ function add(dispatch) {
       })
     })
 
-    load(dispatch)(eventId)
+    if (res.status >= 300) {
+      const body = await res.json()
+      if (body.message) alert(body.message)
+      return false
+    }
+
+    await load(dispatch)(eventId)
+
+    return true
   }
 }
 
