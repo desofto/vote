@@ -157,7 +157,9 @@ function Events({ onSelect }) {
                     {new Date(event.date).toLocaleDateString('fr-CA')}
                   </td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(event.id)}><i className="far fa-trash-alt"></i></Button>
+                    <Button variant="outline-dark" onClick={() => remove(event.id)}>
+                      <i className="far fa-trash-alt"></i>
+                    </Button>
                   </td>
                 </tr>
               ))
@@ -227,7 +229,9 @@ function Stages({ eventId }) {
                     {stage.state}
                   </td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(stage.id)}><i className="far fa-trash-alt"></i></Button>
+                    <Button variant="outline-dark" onClick={() => remove(stage.id)}>
+                      <i className="far fa-trash-alt"></i>
+                    </Button>
                   </td>
                 </tr>
               ))
@@ -293,7 +297,9 @@ function Teams({ eventId }) {
                     {team.state}
                   </td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(team.id)}><i className="far fa-trash-alt"></i></Button>
+                    <Button variant="outline-dark" onClick={() => remove(team.id)}>
+                      <i className="far fa-trash-alt"></i>
+                    </Button>
                   </td>
                 </tr>
               ))
@@ -357,7 +363,9 @@ function Users() {
                   <td>{user.accessCode}</td>
                   <td>{user.isAdmin ? 'admin' : 'user'}</td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(user.id)}><i className="far fa-trash-alt"></i></Button>
+                    <Button variant="outline-dark" onClick={() => remove(user.id)}>
+                      <i className="far fa-trash-alt"></i>
+                    </Button>
                   </td>
                 </tr>
               ))
