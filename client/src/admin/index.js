@@ -84,8 +84,8 @@ function Events({ onSelect }) {
 
     return (
       <>
-        <Button variant="primary" className="fa" onClick={() => setShow(true)}>
-          &#xf067;
+        <Button variant="primary" onClick={() => setShow(true)}>
+          <i className="fas fa-plus"></i>
         </Button>
 
         <Modal show={show} onHide={() => setShow(false)}>
@@ -157,7 +157,7 @@ function Events({ onSelect }) {
                     {new Date(event.date).toLocaleDateString('fr-CA')}
                   </td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(event.id)}><i className="far fa-trash-alt"></i></Button> 
+                    <Button variant="outline-dark" onClick={() => remove(event.id)}><i className="far fa-trash-alt"></i></Button>
                   </td>
                 </tr>
               ))
@@ -227,7 +227,7 @@ function Stages({ eventId }) {
                     {stage.state}
                   </td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(stage.id)}><i className="far fa-trash-alt"></i></Button> 
+                    <Button variant="outline-dark" onClick={() => remove(stage.id)}><i className="far fa-trash-alt"></i></Button>
                   </td>
                 </tr>
               ))
@@ -293,7 +293,7 @@ function Teams({ eventId }) {
                     {team.state}
                   </td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(team.id)}><i className="far fa-trash-alt"></i></Button> 
+                    <Button variant="outline-dark" onClick={() => remove(team.id)}><i className="far fa-trash-alt"></i></Button>
                   </td>
                 </tr>
               ))
@@ -357,7 +357,7 @@ function Users() {
                   <td>{user.accessCode}</td>
                   <td>{user.isAdmin ? 'admin' : 'user'}</td>
                   <td>
-                    <Button variant="outline-dark" onClick={() => remove(user.id)}><i className="far fa-trash-alt"></i></Button> 
+                    <Button variant="outline-dark" onClick={() => remove(user.id)}><i className="far fa-trash-alt"></i></Button>
                   </td>
                 </tr>
               ))
