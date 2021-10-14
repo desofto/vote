@@ -44,7 +44,21 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     tableName: 'Teams',
     timestamps: true,
-    underscored: false
+    underscored: false,
+
+    hooks: {
+      async afterSave(team, _options) {
+        if (team.state !== 'started') return
+
+        const event = await team.getEvent()
+        const teams = await event.getTeams()
+        await teams.forEach(async t => {
+          if (t.id === team.id) return
+          if (t.state !== 'started') return
+          return t.update({ state: 'finished'})
+        })
+      }
+    }
   })
 
   return Team

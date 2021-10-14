@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.event_id, { include: ['teams'] })
     abilities.authorize('read', event, req.currentUser)
-    const team = await Team.findOne({ where: { id: req.params.id, eventId: event.id }})
+    const team = (await event.getTeams({ where: { id: req.params.id }}))[0]
     abilities.authorize('read', team, req.currentUser)
 
     res.status(200).json(
@@ -48,8 +48,7 @@ router.post('/', async (req, res) => {
     abilities.authorize('read', event, req.currentUser)
 
     const attributes = permit(req.body, ['title', 'state'])
-    const team = await Team.build(attributes)
-    team.eventId = event.id
+    const team = await Team.build({ ...attributes, eventId: event.id })
     abilities.authorize('create', team, req.currentUser)
     await team.save()
 
@@ -65,10 +64,20 @@ router.put('/:id', async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.event_id)
     abilities.authorize('read', event, req.currentUser)
-    const team = await Team.findOne({ where: { id: req.params.id, eventId: event.id }})
+    const team = (await event.getTeams({ where: { id: req.params.id }}))[0]
     abilities.authorize('update', team, req.currentUser)
 
     const attributes = permit(req.body, ['title', 'state'])
+    /*
+    if (attributes.state === 'started') {
+      const teams = await event.getTeams()
+      await teams.forEach(async team => {
+        if (team.state === 'started') {
+          await team.update({ state: 'finished'})
+        }
+      })
+    }
+    */
     await team.update(attributes)
 
     res.status(200).json(
@@ -83,7 +92,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.event_id)
     abilities.authorize('read', event, req.currentUser)
-    const team = await Team.findOne({ where: { id: req.params.id, eventId: event.id }})
+    const team = (await event.getTeams({ where: { id: req.params.id }}))[0]
     abilities.authorize('delete', team, req.currentUser)
 
     await team.destroy()

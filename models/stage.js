@@ -50,7 +50,21 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     tableName: 'Stages',
     timestamps: true,
-    underscored: false
+    underscored: false,
+
+    hooks: {
+      async afterSave(stage, _options) {
+        if (stage.state !== 'started') return
+
+        const event = await stage.getEvent()
+        const stages = await event.getStages()
+        await stages.forEach(async s => {
+          if (s.id === stage.id) return
+          if (s.state !== 'started') return
+          return s.update({ state: 'finished'})
+        })
+      }
+    }
   })
 
   return Stage
