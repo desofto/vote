@@ -290,6 +290,10 @@ function Teams({ eventId }) {
     await actions.teams.remove(dispatch)(eventId, id)
   }
 
+  async function update(id, change) {
+    await actions.teams.update(dispatch)(eventId, id, change)
+  }
+
   return (
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
@@ -321,7 +325,9 @@ function Teams({ eventId }) {
                     {team.title}
                   </td>
                   <td>
-                    {team.state}
+                    {
+                      <ControlledState state={team.state} onChange={state => update(team.id, { state })} />
+                    }
                   </td>
                   <td>
                     <Button variant="outline-dark" onClick={() => remove(team.id)}>
