@@ -47,24 +47,42 @@ function ControlledState({ state, onChange }) {
 }
 
 function Admin() {
-  const [selectedEventId, setSelectedEventId] = useState(null)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   function EventSelected() {
     const [tab, setTab] = useState('stages')
 
+    function back(e) {
+      e.preventDefault()
+      setSelectedEvent(null)
+    }
+
     return (
       <>
-        <button onClick={() => setSelectedEventId(null)}>&lt;</button>
+        <div className="mb-3 d-flex">
+          <div className="me-3">
+            <a href="#" onClick={back}>
+              <i class="fas fa-backspace"></i>
+            </a>
+          </div>
+
+          <div>
+            <strong>
+              Event: {selectedEvent.title}
+            </strong>
+          </div>
+        </div>
+
         <Tabs
           activeKey={tab}
           onSelect={tab => setTab(tab)}
           className="mb-3"
         >
           <Tab eventKey="stages" title="Stages">
-            <Stages eventId={selectedEventId} />
+            <Stages eventId={selectedEvent.id} />
           </Tab>
           <Tab eventKey="teams" title="Teams">
-            <Teams eventId={selectedEventId} />
+            <Teams eventId={selectedEvent.id} />
           </Tab>
         </Tabs>
       </>
@@ -81,7 +99,7 @@ function Admin() {
         className="mb-3"
       >
         <Tab eventKey="events" title="Events">
-          <Events onSelect={id => setSelectedEventId(id)} />
+          <Events onSelect={event => setSelectedEvent(event)} />
         </Tab>
         <Tab eventKey="users" title="Users">
           <Users />
@@ -91,13 +109,13 @@ function Admin() {
   }
 
   return (
-    <>
+    <div>
       {
-        selectedEventId
+        selectedEvent
         ? <EventSelected />
         : <EventNotSelected />
       }
-    </>
+    </div>
   )
 }
 
@@ -109,9 +127,9 @@ function Events({ onSelect }) {
     await actions.events.load(dispatch)()
   }, [dispatch])
 
-  function openEvent(e, id) {
+  function openEvent(e, event) {
     e.preventDefault()
-    onSelect(id)
+    onSelect(event)
   }
 
   function NewEvent() {
@@ -192,7 +210,7 @@ function Events({ onSelect }) {
                     {index+1}
                   </td>
                   <td>
-                    <a href="" onClick={e => openEvent(e, event.id)}>
+                    <a href="#" onClick={e => openEvent(e, event)}>
                       {event.title}
                     </a>
                   </td>
