@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
     const stage = await Stage.findOne({ where: { id: req.params.id, eventId: event.id }})
     abilities.authorize('update', stage, req.currentUser)
 
-    const attributes = permit(req.body, ['title'])
+    const attributes = permit(req.body, ['title', 'state'])
     await stage.update(attributes)
 
     res.status(200).json(

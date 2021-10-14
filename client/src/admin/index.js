@@ -3,6 +3,27 @@ import { Tabs, Tab, Table, Button, Modal, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from '../actions'
 
+function ControlledState({ state, onChange }) {
+  const ICONS = {
+    initial: 'fa-play-circle',
+    started: 'fa-stop-circle',
+    finished: 'fa-check-circle'
+  }
+
+  const NEXT_STATE = {
+    initial: 'started',
+    started: 'finished',
+    finished: 'finished'
+  }
+  return (
+    <>
+      <Button variant="outline-dark" onClick={() => onChange(NEXT_STATE[state])}>
+        <i className={`far ${ICONS[state]}`}></i>
+      </Button>
+    </>
+  )
+}
+
 function Admin() {
   const [selectedEventId, setSelectedEventId] = useState(null)
 
@@ -191,6 +212,10 @@ function Stages({ eventId }) {
     await actions.stages.remove(dispatch)(eventId, id)
   }
 
+  async function update(id, change) {
+    await actions.stages.update(dispatch)(eventId, id, change)
+  }
+
   return (
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
@@ -226,7 +251,9 @@ function Stages({ eventId }) {
                     {stage.order}
                   </td>
                   <td>
-                    {stage.state}
+                    {
+                      <ControlledState state={stage.state} onChange={state => update(stage.id, { state })} />
+                    }
                   </td>
                   <td>
                     <Button variant="outline-dark" onClick={() => remove(stage.id)}>
