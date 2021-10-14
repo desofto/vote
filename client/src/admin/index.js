@@ -2,24 +2,40 @@ import { useEffect, useState } from 'react'
 import { Tabs, Tab, Table, Button, Modal, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from '../actions'
+import './index.css'
 
 function ControlledState({ state, onChange }) {
   const ICONS = {
     initial: 'fas fa-play',
     started: 'fas fa-stop',
-    finished: 'fas fa-check'
+    finished: 'fas fa-redo'
   }
 
   const NEXT_STATE = {
     initial: 'started',
     started: 'finished',
-    finished: 'finished'
+    finished: 'initial'
   }
+
+  function changeState() {
+    onChange(NEXT_STATE[state])
+    window.focus()
+  }
+
   return (
     <>
-      <Button className="rounded-circle" variant="outline-dark" onClick={() => onChange(NEXT_STATE[state])}>
-        <i className={ICONS[state]}></i>
-      </Button>
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front d-flex align-items-center">
+            {state}
+          </div>
+          <div class="flip-card-back">
+            <Button className="rounded-circle focus-visible" variant="outline-dark" onClick={changeState}>
+              <i className={ICONS[state]}></i>
+            </Button>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
