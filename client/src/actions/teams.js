@@ -65,4 +65,21 @@ function remove(dispatch) {
   }
 }
 
-export { load, add, remove }
+function update(dispatch) {
+  return async function (eventId, id, change) {
+    const state = store.getState()
+
+    await fetch(`/events/${eventId}/teams/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${state.currentUser.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(change)
+    })
+
+    load(dispatch)(eventId)
+  }
+}
+
+export { load, add, update, remove }
