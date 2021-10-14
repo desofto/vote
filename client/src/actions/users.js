@@ -34,7 +34,7 @@ function add(dispatch) {
   return async function (attributes) {
     const state = store.getState()
 
-    await fetch('/users', {
+    const res = await fetch('/users', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${state.currentUser.token}`,
@@ -46,7 +46,15 @@ function add(dispatch) {
       })
     })
 
-    load(dispatch)()
+    if (res.status >= 300) {
+      const body = await res.json()
+      if (body.message) alert(body.message)
+      return false
+    }
+
+    await load(dispatch)()
+
+    return true
   }
 }
 

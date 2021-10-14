@@ -345,19 +345,57 @@ function Teams({ eventId }) {
 }
 
 function Users() {
-  const EMPTY_USER = { fullName: '', isAdmin: '' }
   const users = useSelector(store => store.users)
-  const [user, setUser] = useState(EMPTY_USER)
   const dispatch = useDispatch()
 
   useEffect(async function() {
     await actions.users.load(dispatch)()
   }, [dispatch])
 
-  async function create(e) {
-    e.preventDefault()
-    await actions.users.add(dispatch)(user)
-    setUser(EMPTY_USER)
+  function NewUser() {
+    const [show, setShow] = useState(false)
+    const EMPTY_USER = { fullName: '', isAdmin: false }
+    const [user, setUser] = useState(EMPTY_USER)
+
+    async function create(e) {
+      e.preventDefault()
+      if (!await await actions.users.add(dispatch)(user)) return
+      setUser(EMPTY_USER)
+    }
+
+    return (
+      <>
+        <Button variant="primary" onClick={() => setShow(true)}>
+          <i className="fas fa-plus"></i>
+        </Button>
+
+        <Modal show={show} onHide={() => setShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create a new User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Full name</Form.Label>
+                <Form.Control type="text" value={user.fullName} onChange={e => setUser({ ...user, fullName: e.target.value })} />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Check type="checkbox" label="Admin" value={user.isAdmin} onChange={() => setUser({ ...user, isAdmin: !user.isAdmin })} />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={create}>
+              Create
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+    )
   }
 
   async function remove(id) {
@@ -369,11 +407,7 @@ function Users() {
       <div className="d-flex">
         <div className="flex-grow-1">Users</div>
         <div>
-          <label className="me-1">New user:</label>
-          <input className="me-1" type="text" value={user.fullName} onChange={e => setUser({ ...user, fullName: e.target.value })} />
-          <label className="me-1">Admin?</label>
-          <input className="me-1" type="checkbox" value={user.isAdmin} onChange={e => setUser({ ...user, isAdmin: e.target.value })} />
-          <input type="submit" value="&#xf234;" className="fa" onClick={create} />
+          <NewUser />
         </div>
       </div>
 
