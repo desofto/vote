@@ -5,6 +5,12 @@ import actions from '../actions'
 import './index.css'
 
 function ControlledState({ state, onChange }) {
+  const CAPTIONS = {
+    initial: 'Ready',
+    started: 'On the stage',
+    finished: 'Finished'
+  }
+
   const ICONS = {
     initial: 'fas fa-play',
     started: 'fas fa-stop',
@@ -24,12 +30,12 @@ function ControlledState({ state, onChange }) {
 
   return (
     <>
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front d-flex align-items-center">
-            {state}
+      <div className="flip-card">
+        <div className="flip-card-inner">
+          <div className="flip-card-front" style={{ paddingTop: '5px' }}>
+            {CAPTIONS[state]}
           </div>
-          <div class="flip-card-back">
+          <div className="flip-card-back">
             <Button className="rounded-circle focus-visible" variant="outline-dark" onClick={changeState}>
               <i className={ICONS[state]}></i>
             </Button>
