@@ -118,6 +118,10 @@ function Events({ onSelect }) {
     )
   }
 
+  async function remove(id) {
+    await actions.events.remove(dispatch)(id)
+  }
+
   return (
     <div className="d-flex flex-column px-3">
       <div className="d-flex">
@@ -153,7 +157,7 @@ function Events({ onSelect }) {
                     {new Date(event.date).toLocaleDateString('fr-CA')}
                   </td>
                   <td>
-                    <i className="far fa-trash-alt"></i>
+                    <Button variant="outline-dark" onClick={() => remove(event.id)}><i className="far fa-trash-alt"></i></Button> 
                   </td>
                 </tr>
               ))
@@ -179,6 +183,10 @@ function Stages({ eventId }) {
     e.preventDefault()
     await actions.stages.add(dispatch)(eventId, stage)
     setStage(EMPTY_STAGE)
+  }
+
+  async function remove(id) {
+    await actions.stages.remove(dispatch)(eventId, id)
   }
 
   return (
@@ -218,6 +226,9 @@ function Stages({ eventId }) {
                   <td>
                     {stage.state}
                   </td>
+                  <td>
+                    <Button variant="outline-dark" onClick={() => remove(stage.id)}><i className="far fa-trash-alt"></i></Button> 
+                  </td>
                 </tr>
               ))
             }
@@ -242,6 +253,10 @@ function Teams({ eventId }) {
     e.preventDefault()
     await actions.teams.add(dispatch)(eventId, team)
     setTeam(EMPTY_TEAM)
+  }
+
+  async function remove(id) {
+    await actions.teams.remove(dispatch)(eventId, id)
   }
 
   return (
@@ -277,6 +292,9 @@ function Teams({ eventId }) {
                   <td>
                     {team.state}
                   </td>
+                  <td>
+                    <Button variant="outline-dark" onClick={() => remove(team.id)}><i className="far fa-trash-alt"></i></Button> 
+                  </td>
                 </tr>
               ))
             }
@@ -301,6 +319,10 @@ function Users() {
     e.preventDefault()
     await actions.users.add(dispatch)(user)
     setUser(EMPTY_USER)
+  }
+
+  async function remove(id) {
+    await actions.users.remove(dispatch)(id)
   }
 
   return (
@@ -334,6 +356,9 @@ function Users() {
                   <td>{user.fullName}</td>
                   <td>{user.accessCode}</td>
                   <td>{user.isAdmin ? 'admin' : 'user'}</td>
+                  <td>
+                    <Button variant="outline-dark" onClick={() => remove(user.id)}><i className="far fa-trash-alt"></i></Button> 
+                  </td>
                 </tr>
               ))
             }
