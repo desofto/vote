@@ -62,7 +62,7 @@ function Admin() {
         <div className="mb-3 d-flex">
           <div className="me-3">
             <a href="#" onClick={back}>
-              <i class="fas fa-backspace"></i>
+              <i className="fas fa-backspace"></i>
             </a>
           </div>
 
