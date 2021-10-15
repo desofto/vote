@@ -4,4 +4,5 @@ module.exports = app => {
   app.use('/events', require('./events'))
   app.use('/events/:event_id/stages', require('./stages'))
   app.use('/events/:event_id/teams', require('./teams'))
+  app.use('/dashboard', require('./dashboard'))
 }
