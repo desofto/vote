@@ -4,7 +4,7 @@ const path = require('path')
 
 const errors = require(path.resolve('lib/errors'))
 const auth = require(path.resolve('lib/auth'))
-const { Event, Stage, Team } = require(path.resolve('models'))
+const { Event, Stage, Team, Vote } = require(path.resolve('models'))
 
 const router = require('express').Router()
 router.use(auth.authenticate)
@@ -31,11 +31,13 @@ router.get('/', async (req, res) => {
         },
         stage: {
           id: stage.id,
-          title: stage.title
+          title: stage.title,
+          votes: await Vote.sum('count', { where: { stageId: stage.id } }) || 0
         },
         team: {
           id: team.id,
-          title: team.title
+          title: team.title,
+          votes: await Vote.sum('count', { where: { teamId: stage.id } }) || 0
         }
       })
     } else {
@@ -46,14 +48,16 @@ router.get('/', async (req, res) => {
           id: event.id,
           title: event.title
         },
-        stages: stages.map(stage => ({
+        stages: await Promise.all(stages.map(async stage => ({
           id: stage.id,
-          title: stage.title
-        })),
-        teams: teams.map(team => ({
+          title: stage.title,
+          votes: await Vote.sum('count', { where: { stageId: stage.id } }) || 0
+        }))),
+        teams: await Promise.all(teams.map(async team => ({
           id: team.id,
-          title: team.title
-        }))
+          title: team.title,
+          votes: await Vote.sum('count', { where: { teamId: team.id } }) || 0
+        })))
       })
     }
   } catch (e) {
