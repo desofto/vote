@@ -24,8 +24,8 @@ module.exports = {
     }
 
     type Mutation {
-      usersAdd(user: NewUser): User
-      usersDestroy(id: ID!): Boolean
+      userCreate(user: NewUser): User
+      userDestroy(id: ID!): Boolean
     }
   `,
 
@@ -46,7 +46,7 @@ module.exports = {
   },
 
   mutations: {
-    async usersAdd(_parent, { user: attributes }, { currentUser }, _info) {
+    async userCreate(_parent, { user: attributes }, { currentUser }, _info) {
       const user = await User.build(attributes)
       abilities.authorize('create', user, currentUser)
       await user.save()
@@ -54,7 +54,7 @@ module.exports = {
       return user
     },
 
-    async usersDestroy(_parent, { id }, { currentUser }, _info) {
+    async userDestroy(_parent, { id }, { currentUser }, _info) {
       const user = await User.findByPk(id)
       abilities.authorize('delete', user, currentUser)
       await user.destroy()

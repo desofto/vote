@@ -475,8 +475,8 @@ function Users() {
     async function create(e) {
       e.preventDefault()
       await graphql(`
-        mutation usersAdd($user: NewUser!) {
-          usersAdd(user: $user) { id }
+        mutation userCreate($user: NewUser!) {
+          userCreate(user: $user) { id }
         }
       `, {
         user: user
@@ -521,8 +521,8 @@ function Users() {
 
   async function remove(id) {
     await graphql(`
-      mutation usersDestroy($id: ID!) {
-        usersDestroy(id: $id)
+      mutation userDestroy($id: ID!) {
+        userDestroy(id: $id)
       }
     `, {
       id: id
