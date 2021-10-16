@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
         team: {
           id: team.id,
           title: team.title,
-          votes: await Vote.sum('count', { where: { teamId: stage.id } }) || 0
+          votes: await Vote.sum('count', { where: { teamId: team.id } }) || 0
         }
       })
     } else {
