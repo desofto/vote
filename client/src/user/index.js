@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import actions from '../actions'
 import './index.css'
@@ -19,17 +19,23 @@ function User() {
 
   return (
     <>
-      <div className="mb-4">
-        <div>
-          Event: {dashboard.event && dashboard.event.title}
-        </div>
-        <div>
-          Stage: {dashboard.stage && dashboard.stage.title}
-        </div>
-        <div>
-          Team: {dashboard.team && dashboard.team.title}
-        </div>
-      </div>
+      <Card className="d-flex mb-5">
+        <Card.Body className="m-auto fs-5">
+          <div>
+            <label className="fw-bold me-3">Event:</label>
+            {dashboard.event && dashboard.event.title}
+          </div>
+          <div>
+            <label className="fw-bold me-3">Stage:</label>
+            {dashboard.stage && dashboard.stage.title}
+          </div>
+          <div>
+            <label className="fw-bold me-3">Team:</label>
+            {dashboard.team && dashboard.team.title}
+          </div>
+        </Card.Body>
+      </Card>
+
       <div className="d-flex">
         <Button className="vote-button rounded-circle m-auto mxy-1" variant="outline-info" size="lg" onClick={vote}>
           <i className="vote-icon far fa-thumbs-up"></i>
