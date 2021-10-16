@@ -454,13 +454,15 @@ function Users() {
   const dispatch = useDispatch()
 
   async function usersLoad() {
-    const { users } = await graphql(`
+    const { User } = await graphql(`
       query users {
-        users { id fullName accessCode isAdmin }
+        User {
+          all { id fullName accessCode isAdmin }
+        }
       }
     `)
 
-    setUsers(users)
+    setUsers(User.all)
   }
 
   useEffect(async function() {
@@ -475,8 +477,10 @@ function Users() {
     async function create(e) {
       e.preventDefault()
       await graphql(`
-        mutation userCreate($user: NewUser!) {
-          userCreate(user: $user) { id }
+        query User($user: NewUser!) {
+          User {
+            create(user: $user) { id }
+          }
         }
       `, {
         user: user
@@ -521,8 +525,10 @@ function Users() {
 
   async function remove(id) {
     await graphql(`
-      mutation userDestroy($id: ID!) {
-        userDestroy(id: $id)
+      query Users($id: ID!) {
+        User {
+          destroy(id: $id)
+        }
       }
     `, {
       id: id
