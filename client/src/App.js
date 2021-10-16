@@ -15,7 +15,7 @@ function App() {
   function Dashboard() {
     return (
       <>
-        <div className="mb-4 d-flex p-2">
+        <div className="mb-4 d-flex">
           <div className="flex-grow-1"></div>
           <div className="m-2">
             <label className="me-2">
