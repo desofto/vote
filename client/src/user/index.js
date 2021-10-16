@@ -19,24 +19,30 @@ function User() {
 
   return (
     <>
-      <Card className="d-flex mb-5">
-        <Card.Body className="m-auto fs-5">
-          <div>
-            <label className="fw-bold me-3">Event:</label>
-            {dashboard.event && dashboard.event.title}
-          </div>
-          <div>
-            <label className="fw-bold me-3">Stage:</label>
-            {dashboard.stage && dashboard.stage.title}
-          </div>
-          <div>
-            <label className="fw-bold me-3">Team:</label>
-            {dashboard.team && dashboard.team.title}
-          </div>
-        </Card.Body>
-      </Card>
+      <div className="p-4">
+        <Card className="d-flex mb-5">
+          <Card.Body className="m-auto fs-5">
+            <div>
+              <label className="fw-bold me-3">Event:</label>
+              {dashboard.event && dashboard.event.title}
+            </div>
+            <div>
+              <label className="fw-bold me-3">Stage:</label>
+              {dashboard.stage && dashboard.stage.title}
+            </div>
+            <div>
+              <label className="fw-bold me-3">Team:</label>
+              {dashboard.team && dashboard.team.title}
+            </div>
+            <div>
+              <label className="fw-bold me-3">Votes:</label>
+              {dashboard.team && dashboard.team.votes}
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
 
-      <div className="d-flex">
+      <div className="d-flex mb-5">
         <Button className="vote-button rounded-circle m-auto mxy-1" variant="outline-info" size="lg" onClick={vote}>
           <i className="vote-icon far fa-thumbs-up"></i>
         </Button>
