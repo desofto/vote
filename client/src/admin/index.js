@@ -1,3 +1,4 @@
+import graphql from '../graphql'
 import { useEffect, useState } from 'react'
 import { Tabs, Tab, Table, Button, Modal, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -449,11 +450,21 @@ function Teams({ eventId }) {
 }
 
 function Users() {
-  const users = useSelector(store => store.users)
+  const [users, setUsers] = useState([])
   const dispatch = useDispatch()
 
+  async function usersLoad() {
+    const { users } = await graphql(`
+      query users {
+        users { id fullName accessCode isAdmin }
+      }
+    `)
+
+    setUsers(users)
+  }
+
   useEffect(async function() {
-    await actions.users.load(dispatch)()
+    usersLoad()
   }, [dispatch])
 
   function NewUser() {
@@ -463,8 +474,14 @@ function Users() {
 
     async function create(e) {
       e.preventDefault()
-      if (!await await actions.users.add(dispatch)(user)) return
-      setUser(EMPTY_USER)
+      await graphql(`
+        mutation usersAdd($user: NewUser!) {
+          usersAdd(user: $user) { id }
+        }
+      `, {
+        user: user
+      })
+      usersLoad()
     }
 
     return (
@@ -503,7 +520,14 @@ function Users() {
   }
 
   async function remove(id) {
-    await actions.users.remove(dispatch)(id)
+    await graphql(`
+      mutation usersDestroy($id: ID!) {
+        usersDestroy(id: $id)
+      }
+    `, {
+      id: id
+    })
+    usersLoad()
   }
 
   return (

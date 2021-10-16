@@ -71,6 +71,8 @@ const config = require(path.resolve('config'))
 
     /////////////////////////////////////////////////////////////////////////////
 
+    require('./graphql')(app)
+
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
 
     app.get('/about', (req, res) => {
