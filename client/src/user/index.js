@@ -24,19 +24,19 @@ function User() {
             <Card.Body className="m-auto fs-5">
               <div>
                 <label className="fw-bold me-3">Event:</label>
-                {dashboard.event && dashboard.event.title}
+                {dashboard.event.title}
               </div>
               <div>
                 <label className="fw-bold me-3">Stage:</label>
-                {dashboard.stage && dashboard.stage.title}
+                {dashboard.stage.title}
               </div>
               <div>
                 <label className="fw-bold me-3">Team:</label>
-                {dashboard.team && dashboard.team.title}
+                {dashboard.team.title}
               </div>
               <div>
                 <label className="fw-bold me-3">Votes:</label>
-                {dashboard.team && dashboard.team.votes}
+                {dashboard.team.votes}
               </div>
             </Card.Body>
           </Card>
