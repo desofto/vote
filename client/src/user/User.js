@@ -9,8 +9,14 @@ function User() {
   const dashboard = useSelector(store => store.dashboard)
   const dispatch = useDispatch()
 
-  useEffect(async function() {
-    await actions.dashboard.load(dispatch)()
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      await actions.dashboard.load(dispatch)()
+    }, 1000)
+
+    return () => {
+      clearTimeout(timer)
+    }
   }, [dispatch])
 
   function Dashboard() {
