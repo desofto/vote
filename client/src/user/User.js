@@ -4,14 +4,16 @@ import actions from '../actions'
 
 import StageOpen from './StageOpen'
 import StageClosed from './StageClosed'
+import { Spinner } from 'react-bootstrap'
 
 function User() {
   const dashboard = useSelector(store => store.dashboard)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const timer = setInterval(async () => {
-      await actions.dashboard.load(dispatch)()
+    actions.dashboard.load(dispatch)()
+    const timer = setInterval(() => {
+      actions.dashboard.load(dispatch)()
     }, 1000)
 
     return () => {
@@ -36,7 +38,7 @@ function User() {
       {
         dashboard.event
         ? <Dashboard />
-        : "Loading..."
+        : <Spinner animation="grow" variant="info" />
       }
     </>
   )
