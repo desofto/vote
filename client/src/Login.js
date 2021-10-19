@@ -20,7 +20,7 @@ function Login() {
           <Form.Group className="mb-3">
             <Form.Label className="fw-bolder">Access Code:</Form.Label>
             <div className="d-flex">
-              <Form.Control type="text" value={code} onChange={e => setCode(e.target.value)} />
+              <Form.Control className="me-3" type="text" value={code} onChange={e => setCode(e.target.value)} />
               <Button variant="primary" onClick={login}>
                 &gt;
               </Button>
