@@ -6,3 +6,25 @@
   font-size: 9em;
   padding: .7em .7em;
 }
+
+.dashboard-table {
+  background: #F9F9F9;
+  border-radius: 2em;
+  box-shadow: 0 0 14px 0 rgba(3,5,7, .35);
+}
+
+.dasboard-team-title {
+  background: #EFEFEF;
+  border-radius: 2em;
+}
+
+.dasboard-team-progress {
+  background: #EFEFEF;
+  border-radius: 2em;
+  height: 100%;
+}
+
+.dasboard-team-progress .progress {
+  height: 1em;
+  border-radius: .2em;
+}
