@@ -38,7 +38,7 @@ function User() {
       {
         dashboard.event
         ? <Dashboard />
-        : <Spinner animation="grow" variant="info" />
+        : <div className="d-flex"><Spinner className="m-auto" animation="grow" variant="info" /></div>
       }
     </>
   )
