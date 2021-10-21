@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
+import './Login.css'
 
-import actions from './actions'
+import actions from 'actions'
 
 function Login() {
   const [code, setCode] = useState('')
@@ -14,8 +15,8 @@ function Login() {
   }
 
   return (
-    <div className="d-flex text-center" style={{ width: '100vw', height: '100vh' }}>
-      <div className="m-auto px-5 py-4" style={{ border: '1px solid #eee', borderRadius: '2em' }}>
+    <div className="login-card-outer d-flex text-center">
+      <div className="login-card-inner m-auto px-5 py-4">
         <Form onSubmit={login}>
           <Form.Group className="mb-3">
             <Form.Label className="fw-bolder">Access Code:</Form.Label>

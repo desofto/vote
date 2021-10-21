@@ -1,10 +1,10 @@
-import store from './store'
+import store from 'store'
 
 class GraphqlError extends Error {
   name = 'GraphqlError'
 }
 
-export default async function(query, variables) {
+export default async function graphql(query, variables) {
   const state = store.getState()
 
   const res = await fetch('/graphql', {

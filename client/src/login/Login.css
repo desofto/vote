@@ -1,0 +1,13 @@
+.login-card-outer {
+  width: 100vw;
+  height: 100vh;
+}
+
+.login-card-inner {
+  border: 1px solid #eee;
+  border-radius: 2em;
+}
+
+.login-card-inner:hover {
+  box-shadow: 0 0 14px 0 rgba(3,5,7, .35);
+}

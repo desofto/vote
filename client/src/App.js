@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 
 import './App.css'
 
-import Login from './Login'
+import Login from './login'
 import User from './user'
 import Admin from './admin'
 import actions from './actions'
