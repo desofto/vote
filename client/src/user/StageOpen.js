@@ -1,7 +1,6 @@
 import { Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import actions from '../actions'
-import './index.css'
+import actions from 'actions'
   
 function StageOpen() {
   const dashboard = useSelector(store => store.dashboard)

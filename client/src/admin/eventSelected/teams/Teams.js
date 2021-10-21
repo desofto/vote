@@ -1,25 +1,25 @@
 import { useEffect } from "react"
 import { Button, Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import actions from '../../../actions'
+import actions from 'actions'
 
-import ControlledState from '../../ControlledState'
+import ControlledState from 'shared/ControlledState'
 import NewTeam from "./NewTeam"
 
 function Teams({ eventId }) {
   const teams = useSelector(store => store.teams)
   const dispatch = useDispatch()
 
-  useEffect(async function() {
-    await actions.teams.load(dispatch)(eventId)
-  }, [dispatch])
+  useEffect(() => {
+    actions.teams.load(dispatch)(eventId)
+  }, [dispatch, eventId])
 
-  async function remove(id) {
-    await actions.teams.remove(dispatch)(eventId, id)
+  function remove(id) {
+    actions.teams.remove(dispatch)(eventId, id)
   }
 
-  async function update(id, change) {
-    await actions.teams.update(dispatch)(eventId, id, change)
+  function update(id, change) {
+    actions.teams.update(dispatch)(eventId, id, change)
   }
 
   return (

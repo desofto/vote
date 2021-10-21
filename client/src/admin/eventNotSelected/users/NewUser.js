@@ -1,4 +1,4 @@
-import graphql from '../../../graphql'
+import graphql from 'utils/graphql'
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 

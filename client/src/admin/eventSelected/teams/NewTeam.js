@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import actions from '../../../actions'
+import actions from 'actions'
 
 function NewTeam({ eventId }) {
   const [show, setShow] = useState(false)

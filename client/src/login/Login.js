@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import './Login.css'
 
-import actions from './actions'
+import actions from 'actions'
 
 function Login() {
   const [code, setCode] = useState('')

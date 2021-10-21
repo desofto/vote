@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import actions from '../actions'
+import actions from 'actions'
 
 import StageOpen from './StageOpen'
 import StageClosed from './StageClosed'
 import { Spinner } from 'react-bootstrap'
+
+import './User.css'
 
 function User() {
   const dashboard = useSelector(store => store.dashboard)

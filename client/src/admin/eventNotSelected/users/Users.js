@@ -1,4 +1,4 @@
-import graphql from '../../../graphql'
+import graphql from 'utils/graphql'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Table } from 'react-bootstrap'
@@ -21,7 +21,7 @@ function Users() {
     setUsers(User.all)
   }
 
-  useEffect(async function() {
+  useEffect(() => {
     usersLoad()
   }, [dispatch])
 

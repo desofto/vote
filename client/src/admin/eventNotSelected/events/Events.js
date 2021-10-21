@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Button, Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import actions from '../../../actions'
+import actions from 'actions'
 
 import NewEvent from "./NewEvent"
 
@@ -9,8 +9,8 @@ function Events({ onSelect }) {
   const events = useSelector(store => store.events)
   const dispatch = useDispatch()
 
-  useEffect(async function() {
-    await actions.events.load(dispatch)()
+  useEffect(() => {
+    actions.events.load(dispatch)()
   }, [dispatch])
 
   function openEvent(e, event) {
@@ -49,7 +49,7 @@ function Events({ onSelect }) {
                     {index+1}
                   </td>
                   <td>
-                    <a href="#" onClick={e => openEvent(e, event)}>
+                    <a href="/" onClick={e => openEvent(e, event)}>
                       {event.title}
                     </a>
                   </td>

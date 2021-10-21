@@ -16,7 +16,7 @@ function EventSelected() {
     <>
       <div className="mb-3 d-flex">
         <div className="me-3">
-          <a href="#" onClick={back}>
+          <a href="/" onClick={back}>
             <i className="fas fa-backspace"></i>
           </a>
         </div>

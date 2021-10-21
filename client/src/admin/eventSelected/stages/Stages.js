@@ -1,18 +1,20 @@
 import { useEffect } from "react"
 import { Button, Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import actions from '../../../actions'
+import actions from 'actions'
 
-import ControlledState from '../../ControlledState'
+import ControlledState from 'shared/ControlledState'
 import NewStage from "./NewStage"
 
 function Stages({ eventId }) {
   const stages = useSelector(store => store.stages)
   const dispatch = useDispatch()
 
-  useEffect(async function() {
-    await actions.stages.load(dispatch)(eventId)
-  }, [dispatch])
+  useEffect(() => {
+    (async () => {
+      await actions.stages.load(dispatch)(eventId)
+    })()
+  }, [dispatch, eventId])
 
   async function remove(id) {
     await actions.stages.remove(dispatch)(eventId, id)
