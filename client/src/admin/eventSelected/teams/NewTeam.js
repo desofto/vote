@@ -13,6 +13,7 @@ function NewTeam({ eventId }) {
     e.preventDefault()
     await actions.teams.add(dispatch)(eventId, team)
     setTeam(EMPTY_TEAM)
+    setShow(false)
   }
 
   return (

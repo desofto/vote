@@ -14,6 +14,7 @@ function NewStage({ eventId }) {
     e.preventDefault()
     await actions.stages.add(dispatch)(eventId, stage)
     setStage(EMPTY_STAGE)
+    setShow(false)
   }
 
   return (

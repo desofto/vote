@@ -21,6 +21,8 @@ function NewUser({ reload }) {
     })
 
     reload()
+
+    setShow(false)
   }
 
   return (

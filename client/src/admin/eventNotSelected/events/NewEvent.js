@@ -9,11 +9,11 @@ function NewEvent() {
   const [event, setEvent] = useState(EMPTY_EVENT)
   const dispatch = useDispatch()
 
-
   async function create(e) {
     e.preventDefault()
     if (!await actions.events.add(dispatch)(event)) return
     setEvent(EMPTY_EVENT)
+    setShow(false)
   }
 
   return (
