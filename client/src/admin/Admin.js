@@ -6,14 +6,14 @@ import EventNotSelected from './eventNotSelected'
 import './Admin.css'
 
 function Admin() {
-  const [selectedEvent] = useState(null)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   return (
     <div>
       {
         selectedEvent
-        ? <EventSelected />
-        : <EventNotSelected />
+        ? <EventSelected event={selectedEvent} reset={() => setSelectedEvent(null)} />
+        : <EventNotSelected onSelect={event => setSelectedEvent(event)} />
       }
     </div>
   )

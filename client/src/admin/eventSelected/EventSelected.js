@@ -3,13 +3,12 @@ import { Tab, Tabs } from 'react-bootstrap'
 import Stages from './stages'
 import Teams from './teams'
 
-function EventSelected() {
-  const [selectedEvent, setSelectedEvent] = useState(null)
+function EventSelected({ event, reset }) {
   const [tab, setTab] = useState('stages')
 
   function back(e) {
     e.preventDefault()
-    setSelectedEvent(null)
+    reset()
   }
 
   return (
@@ -23,7 +22,7 @@ function EventSelected() {
 
         <div>
           <strong>
-            Event: {selectedEvent.title}
+            Event: {event.title}
           </strong>
         </div>
       </div>
@@ -34,10 +33,10 @@ function EventSelected() {
         className="mb-3"
       >
         <Tab eventKey="stages" title="Stages">
-          <Stages eventId={selectedEvent.id} />
+          <Stages eventId={event.id} />
         </Tab>
         <Tab eventKey="teams" title="Teams">
-          <Teams eventId={selectedEvent.id} />
+          <Teams eventId={event.id} />
         </Tab>
       </Tabs>
     </>

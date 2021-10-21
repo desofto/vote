@@ -3,9 +3,7 @@ import { Tab, Tabs } from 'react-bootstrap'
 import Events from './events'
 import Users from './users'
 
-
-function EventNotSelected() {
-  const [setSelectedEvent] = useState(null)
+function EventNotSelected({ onSelect }) {
   const [tab, setTab] = useState('events')
 
   return (
@@ -15,7 +13,7 @@ function EventNotSelected() {
       className="mb-3"
     >
       <Tab eventKey="events" title="Events">
-        <Events onSelect={event => setSelectedEvent(event)} />
+        <Events onSelect={event => onSelect(event)} />
       </Tab>
       <Tab eventKey="users" title="Users">
         <Users />
