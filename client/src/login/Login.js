@@ -15,8 +15,8 @@ function Login() {
   }
 
   return (
-    <div className="login-card d-flex text-center">
-      <div className="login-card-border m-auto px-5 py-4">
+    <div className="login-card-outer d-flex text-center">
+      <div className="login-card-inner m-auto px-5 py-4">
         <Form onSubmit={login}>
           <Form.Group className="mb-3">
             <Form.Label className="fw-bolder">Access Code:</Form.Label>

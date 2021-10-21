@@ -1,24 +1,24 @@
 import { Button } from 'react-bootstrap'
 
+const CAPTIONS = {
+  initial: 'Ready',
+  started: 'On the stage',
+  finished: 'Finished'
+}
+
+const ICONS = {
+  initial: 'fas fa-play',
+  started: 'fas fa-stop',
+  finished: 'fas fa-redo'
+}
+
+const NEXT_STATE = {
+  initial: 'started',
+  started: 'finished',
+  finished: 'initial'
+}
+
 function ControlledState({ state, onChange }) {
-  const CAPTIONS = {
-    initial: 'Ready',
-    started: 'On the stage',
-    finished: 'Finished'
-  }
-
-  const ICONS = {
-    initial: 'fas fa-play',
-    started: 'fas fa-stop',
-    finished: 'fas fa-redo'
-  }
-
-  const NEXT_STATE = {
-    initial: 'started',
-    started: 'finished',
-    finished: 'initial'
-  }
-
   function changeState() {
     onChange(NEXT_STATE[state])
     window.focus()
