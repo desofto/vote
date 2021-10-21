@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
-import { Button, Form, Modal, Table } from "react-bootstrap"
+import { useEffect } from "react"
+import { Button, Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import actions from '../actions'
+import actions from '../../../actions'
 
-import ControlledState from './ControlledState'
+import ControlledState from '../../ControlledState'
+import NewStage from "./NewStage"
 
 function Stages({ eventId }) {
   const stages = useSelector(store => store.stages)
@@ -12,48 +13,6 @@ function Stages({ eventId }) {
   useEffect(async function() {
     await actions.stages.load(dispatch)(eventId)
   }, [dispatch])
-
-  function NewStage() {
-    const [show, setShow] = useState(false)
-    const EMPTY_STAGE = { title: '' }
-    const [stage, setStage] = useState(EMPTY_STAGE)
-
-    async function create(e) {
-      e.preventDefault()
-      await actions.stages.add(dispatch)(eventId, stage)
-      setStage(EMPTY_STAGE)
-    }
-
-    return (
-      <>
-        <Button variant="primary" onClick={() => setShow(true)}>
-          <i className="fas fa-plus"></i>
-        </Button>
-
-        <Modal show={show} onHide={() => setShow(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create a new Stage</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>New stage:</Form.Label>
-                <Form.Control type="text" value={stage.title} onChange={e => setStage({ ...stage, title: e.target.value })} />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShow(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={create}>
-              Create
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    )
-  }
 
   async function remove(id) {
     await actions.stages.remove(dispatch)(eventId, id)
@@ -68,7 +27,7 @@ function Stages({ eventId }) {
       <div className="d-flex">
         <div className="flex-grow-1">Stages</div>
         <div className="mb-3">
-          <NewStage />
+          <NewStage eventId={eventId} />
         </div>
       </div>
 

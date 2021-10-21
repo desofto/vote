@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-import EventSelected from './EventSelected'
-import EventNotSelected from './EventNotSelected'
+import EventSelected from './eventSelected'
+import EventNotSelected from './eventNotSelected'
 
 function Admin() {
   const [selectedEvent] = useState(null)

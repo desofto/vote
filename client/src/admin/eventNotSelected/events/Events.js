@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react"
-import { Button, Form, Modal, Table } from "react-bootstrap"
+import { useEffect } from "react"
+import { Button, Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import actions from '../actions'
+import actions from '../../../actions'
+
+import NewEvent from "./NewEvent"
 
 function Events({ onSelect }) {
   const events = useSelector(store => store.events)
@@ -14,53 +16,6 @@ function Events({ onSelect }) {
   function openEvent(e, event) {
     e.preventDefault()
     onSelect(event)
-  }
-
-  function NewEvent() {
-    const [show, setShow] = useState(false)
-    const EMPTY_EVENT = { title: '', date: '' }
-    const [event, setEvent] = useState(EMPTY_EVENT)
-
-    async function create(e) {
-      e.preventDefault()
-      if (!await actions.events.add(dispatch)(event)) return
-      setEvent(EMPTY_EVENT)
-    }
-
-    return (
-      <>
-        <Button variant="primary" onClick={() => setShow(true)}>
-          <i className="fas fa-plus"></i>
-        </Button>
-
-        <Modal show={show} onHide={() => setShow(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create a new Event</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Event title</Form.Label>
-                <Form.Control type="text" value={event.title} onChange={e => setEvent({ ...event, title: e.target.value })} />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Event starts</Form.Label>
-                <Form.Control type="date" value={event.date} onChange={e => setEvent({ ...event, date: e.target.value })} />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShow(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={create}>
-              Create
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    )
   }
 
   async function remove(id) {

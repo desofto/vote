@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Tab, Tabs } from "react-bootstrap"
-import Events from "./Events"
-import Users from "./Users"
+import Events from "./events"
+import Users from "./users"
 
 
 function EventNotSelected() {
