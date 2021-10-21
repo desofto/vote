@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { Button, Form, Modal } from "react-bootstrap"
-import { useDispatch } from "react-redux"
+import { useState } from 'react'
+import { Button, Form, Modal } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
 import actions from 'actions'
 
 function NewStage({ eventId }) {

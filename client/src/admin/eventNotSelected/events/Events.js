@@ -1,9 +1,9 @@
-import { useEffect } from "react"
-import { Button, Table } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from 'react'
+import { Button, Table } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
 
-import NewEvent from "./NewEvent"
+import NewEvent from './NewEvent'
 
 function Events({ onSelect }) {
   const events = useSelector(store => store.events)

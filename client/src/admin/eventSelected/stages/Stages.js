@@ -1,10 +1,10 @@
-import { useEffect } from "react"
-import { Button, Table } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from 'react'
+import { Button, Table } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
 
 import ControlledState from 'shared/ControlledState'
-import NewStage from "./NewStage"
+import NewStage from './NewStage'
 
 function Stages({ eventId }) {
   const stages = useSelector(store => store.stages)

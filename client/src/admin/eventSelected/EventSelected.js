@@ -1,7 +1,7 @@
-import { useState } from "react"
-import { Tab, Tabs } from "react-bootstrap"
-import Stages from "./stages"
-import Teams from "./teams"
+import { useState } from 'react'
+import { Tab, Tabs } from 'react-bootstrap'
+import Stages from './stages'
+import Teams from './teams'
 
 function EventSelected() {
   const [selectedEvent, setSelectedEvent] = useState(null)
