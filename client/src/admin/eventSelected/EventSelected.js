@@ -1,7 +1,9 @@
+import { Suspense, lazy } from 'react'
 import { useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
-import Stages from './stages'
-import Teams from './teams'
+
+const Stages = lazy(() => import('./stages'))
+const Teams = lazy(() => import('./teams'))
 
 function EventSelected({ event, reset }) {
   const [tab, setTab] = useState('stages')
@@ -12,7 +14,7 @@ function EventSelected({ event, reset }) {
   }
 
   return (
-    <>
+    <Suspense fallback={<p>Loading...</p>}>
       <div className="mb-3 d-flex">
         <div className="me-3">
           <a href="/" onClick={back}>
@@ -39,7 +41,7 @@ function EventSelected({ event, reset }) {
           <Teams eventId={event.id} />
         </Tab>
       </Tabs>
-    </>
+    </Suspense>
   )
 }
 

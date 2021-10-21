@@ -1,12 +1,14 @@
+import { Suspense, lazy } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'react-bootstrap'
 
 import './App.css'
 
-import Login from './login'
-import User from './user'
-import Admin from './admin'
 import actions from './actions'
+
+const Login = lazy(() => import('./login'))
+const User = lazy(() => import('./user'))
+const Admin = lazy(() => import('./admin'))
 
 function App() {
   const currentUser = useSelector(store => store.currentUser)
@@ -40,13 +42,13 @@ function App() {
   }
 
   return (
-    <>
+    <Suspense fallback={<p>Loading...</p>}>
       {
         currentUser.token
         ? <Dashboard />
         : <Login />
       }
-    </>
+    </Suspense>
   )
 }
 
