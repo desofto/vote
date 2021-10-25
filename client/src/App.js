@@ -1,20 +1,15 @@
-import { Suspense, lazy, useContext } from 'react'
-import { useDispatch } from 'react-redux'
+import { Suspense, lazy } from 'react'
 import { Button } from 'react-bootstrap'
 
 import './App.css'
 
-import { Context } from './context'
-import actions from './actions'
+import { currentUser, setCurrentUser } from './context'
 
 const Login = lazy(() => import('./login'))
 const User = lazy(() => import('./user'))
 const Admin = lazy(() => import('./admin'))
 
 function App() {
-  const { currentUser } = useContext(Context)
-  const dispatch = useDispatch()
-
   function Dashboard() {
     return (
       <>
@@ -25,7 +20,7 @@ function App() {
               {currentUser.fullName}
             </label>
 
-            <Button variant="primary" onClick={() => actions.currentUser.logout(dispatch)()}>
+            <Button variant="primary" onClick={() => setCurrentUser({})}>
               Logout
             </Button>
           </div>
@@ -45,7 +40,7 @@ function App() {
   return (
     <Suspense fallback={<p>Loading...</p>}>
       {
-        currentUser && currentUser.token
+        currentUser.token
         ? <Dashboard />
         : <Login />
       }

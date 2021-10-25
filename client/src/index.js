@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -7,16 +7,15 @@ import { Provider } from 'react-redux'
 
 import App from './App'
 import store from './store'
-import { Context, useCurrentUser } from './context'
+import context from './context'
 
 function Main() {
-  const ctx = useCurrentUser()
+  context(useState({}))
+
   return (
-    <Context.Provider value={ctx}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </Context.Provider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   )
 }
 

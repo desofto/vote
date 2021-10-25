@@ -2,14 +2,13 @@ import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import actions from 'actions'
-import { useHttp } from 'utils/http'
+import { request } from 'utils/http'
 
 function NewEvent() {
   const [show, setShow] = useState(false)
   const EMPTY_EVENT = { title: '', date: '' }
   const [event, setEvent] = useState(EMPTY_EVENT)
   const dispatch = useDispatch()
-  const { request } = useHttp()
 
   async function create(e) {
     e.preventDefault()

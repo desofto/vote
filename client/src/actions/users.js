@@ -1,6 +1,7 @@
+import { request } from 'utils/http'
 import { UPDATE } from 'reducers/users'
 
-function load(dispatch, request) {
+function load(dispatch) {
   return async function () {
     const body = await request('/users')
     if (!body.data) return
@@ -16,24 +17,24 @@ function load(dispatch, request) {
   }
 }
 
-function add(dispatch, request) {
+function add(dispatch) {
   return async function (attributes) {
     await request('/users', 'POST', {
       full_name: attributes.fullName,
       is_admin: attributes.isAdmin
     })
 
-    await load(dispatch, request)()
+    await load(dispatch)()
 
     return true
   }
 }
 
-function remove(dispatch, request) {
+function remove(dispatch) {
   return async function (id) {
     await request(`/users/${id}`, 'DELETE')
 
-    load(dispatch, request)()
+    load(dispatch)()
   }
 }
 

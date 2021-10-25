@@ -1,6 +1,7 @@
+import { request } from 'utils/http'
 import { UPDATE } from 'reducers/events'
 
-function load(dispatch, request) {
+function load(dispatch) {
   return async function () {
     const body = await request('/events')
     if (!body.data) return
@@ -15,24 +16,24 @@ function load(dispatch, request) {
   }
 }
 
-function add(dispatch, request) {
+function add(dispatch) {
   return async function (attributes) {
     await request('/events', 'POST', {
         title: attributes.title,
         date: attributes.date
     })
 
-    await load(dispatch, request)()
+    await load(dispatch)()
 
     return true
   }
 }
 
-function remove(dispatch, request) {
+function remove(dispatch) {
   return async function (id) {
     await request(`/events/${id}`, 'DELETE')
 
-    load(dispatch, request)()
+    load(dispatch)()
   }
 }
 

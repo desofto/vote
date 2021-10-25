@@ -1,13 +1,11 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { useHttp } from 'utils/http'
-import { Context } from '../context'
+import { request } from 'utils/http'
+import { setCurrentUser } from '../context'
 import './Login.css'
 
 function Login() {
-  const { request } = useHttp()
   const [code, setCode] = useState('')
-  const { setCurrentUser } = useContext(Context)
 
   async function login(e) {
     const { token, id, full_name, is_admin } = await request('/auth', 'POST', { code: code })

@@ -1,6 +1,7 @@
+import { request } from 'utils/http'
 import { UPDATE } from 'reducers/teams'
 
-function load(dispatch, request) {
+function load(dispatch) {
   return async function (eventId) {
     const body = await request(`/events/${eventId}/teams`)
     if (!body.data) return
@@ -15,32 +16,32 @@ function load(dispatch, request) {
   }
 }
 
-function add(dispatch, request) {
+function add(dispatch) {
   return async function (eventId, attributes) {
     await request(`/events/${eventId}/teams`, 'POST', {
       title: attributes.title,
       state: attributes.state
     })
 
-    await load(dispatch, request)(eventId)
+    await load(dispatch)(eventId)
 
     return true
   }
 }
 
-function remove(dispatch, request) {
+function remove(dispatch) {
   return async function (eventId, id) {
     await request(`/events/${eventId}/teams/${id}`, 'DELETE')
 
-    load(dispatch, request)(eventId)
+    load(dispatch)(eventId)
   }
 }
 
-function update(dispatch, request) {
+function update(dispatch) {
   return async function (eventId, id, change) {
     await request(`/events/${eventId}/teams/${id}`, 'PUT', change)
 
-    load(dispatch, request)(eventId)
+    load(dispatch)(eventId)
   }
 }
 

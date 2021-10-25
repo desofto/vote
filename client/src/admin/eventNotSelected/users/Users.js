@@ -1,12 +1,11 @@
-import { useHttp } from 'utils/http'
 import { useCallback, useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
+import { graphql } from 'utils/http'
 
 import NewUser from './NewUser'
 
 function Users() {
   const [users, setUsers] = useState([])
-  const { graphql } = useHttp()
 
   const usersLoad = useCallback(async () => {
     const { User } = await graphql(`
@@ -18,7 +17,7 @@ function Users() {
     `)
 
     setUsers(User.all)
-  }, [graphql])
+  }, [])
 
   useEffect(() => {
     usersLoad()
