@@ -1,22 +1,8 @@
-import { UPDATE } from '../reducers/users'
+import { UPDATE } from 'reducers/users'
 
-import actions from '.'
-import store from '../store'
-
-function load(dispatch) {
+function load(dispatch, request) {
   return async function () {
-    const state = store.getState()
-
-    const res = await fetch('/users', {
-      headers: {
-        'Authorization': `Bearer ${state.currentUser.token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-
-    if (!actions.currentUser.checkStatus(dispatch)(res.status)) return
-
-    const body = await res.json()
+    const body = await request('/users')
     if (!body.data) return
 
     const users = body.data.map(e => ({
@@ -30,47 +16,24 @@ function load(dispatch) {
   }
 }
 
-function add(dispatch) {
+function add(dispatch, request) {
   return async function (attributes) {
-    const state = store.getState()
-
-    const res = await fetch('/users', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${state.currentUser.token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        full_name: attributes.fullName,
-        is_admin: attributes.isAdmin
-      })
+    await request('/users', 'POST', {
+      full_name: attributes.fullName,
+      is_admin: attributes.isAdmin
     })
 
-    if (res.status >= 300) {
-      const body = await res.json()
-      if (body.message) alert(body.message)
-      return false
-    }
-
-    await load(dispatch)()
+    await load(dispatch, request)()
 
     return true
   }
 }
 
-function remove(dispatch) {
+function remove(dispatch, request) {
   return async function (id) {
-    const state = store.getState()
+    await request(`/users/${id}`, 'DELETE')
 
-    await fetch(`/users/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${state.currentUser.token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-
-    load(dispatch)()
+    load(dispatch, request)()
   }
 }
 

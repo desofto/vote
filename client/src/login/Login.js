@@ -1,17 +1,18 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useContext } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import { useHttp } from 'utils/http'
+import { Context } from '../context'
 import './Login.css'
 
-import actions from 'actions'
-
 function Login() {
+  const { request } = useHttp()
   const [code, setCode] = useState('')
-  const dispatch = useDispatch()
+  const { setCurrentUser } = useContext(Context)
 
-  function login(e) {
-    e.preventDefault()
-    actions.currentUser.login(dispatch)(code)
+  async function login(e) {
+    const { token, id, full_name, is_admin } = await request('/auth', 'POST', { code: code })
+
+    setCurrentUser({ token, id, fullName: full_name, isAdmin: is_admin })
   }
 
   return (

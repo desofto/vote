@@ -1,15 +1,14 @@
-import graphql from 'utils/graphql'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useHttp } from 'utils/http'
+import { useCallback, useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap'
 
 import NewUser from './NewUser'
 
 function Users() {
   const [users, setUsers] = useState([])
-  const dispatch = useDispatch()
+  const { graphql } = useHttp()
 
-  async function usersLoad() {
+  const usersLoad = useCallback(async () => {
     const { User } = await graphql(`
       query users {
         User {
@@ -19,11 +18,11 @@ function Users() {
     `)
 
     setUsers(User.all)
-  }
+  }, [graphql])
 
   useEffect(() => {
     usersLoad()
-  }, [dispatch])
+  }, [usersLoad])
 
   async function remove(id) {
     await graphql(`

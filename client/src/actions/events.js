@@ -1,22 +1,8 @@
-import { UPDATE } from '../reducers/events'
+import { UPDATE } from 'reducers/events'
 
-import actions from '.'
-import store from '../store'
-
-function load(dispatch) {
+function load(dispatch, request) {
   return async function () {
-    const state = store.getState()
-
-    const res = await fetch('/events', {
-      headers: {
-        'Authorization': `Bearer ${state.currentUser.token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-
-    if (!actions.currentUser.checkStatus(dispatch)(res.status)) return
-
-    const body = await res.json()
+    const body = await request('/events')
     if (!body.data) return
 
     const events = body.data.map(e => ({
@@ -29,47 +15,24 @@ function load(dispatch) {
   }
 }
 
-function add(dispatch) {
+function add(dispatch, request) {
   return async function (attributes) {
-    const state = store.getState()
-
-    const res = await fetch('/events', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${state.currentUser.token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    await request('/events', 'POST', {
         title: attributes.title,
         date: attributes.date
-      })
     })
 
-    if (res.status >= 300) {
-      const body = await res.json()
-      if (body.message) alert(body.message)
-      return false
-    }
-
-    await load(dispatch)()
+    await load(dispatch, request)()
 
     return true
   }
 }
 
-function remove(dispatch) {
+function remove(dispatch, request) {
   return async function (id) {
-    const state = store.getState()
+    await request(`/events/${id}`, 'DELETE')
 
-    await fetch(`/events/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${state.currentUser.token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-
-    load(dispatch)()
+    load(dispatch, request)()
   }
 }
 

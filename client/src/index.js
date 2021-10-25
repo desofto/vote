@@ -7,12 +7,22 @@ import { Provider } from 'react-redux'
 
 import App from './App'
 import store from './store'
+import { Context, useCurrentUser } from './context'
+
+function Main() {
+  const ctx = useCurrentUser()
+  return (
+    <Context.Provider value={ctx}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Context.Provider>
+  )
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Main />
   </React.StrictMode>,
   document.getElementById('root')
 )

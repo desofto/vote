@@ -1,12 +1,12 @@
-import graphql from 'utils/graphql'
+import { useHttp } from 'utils/http'
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
-
 
 function NewUser({ reload }) {
   const [show, setShow] = useState(false)
   const EMPTY_USER = { fullName: '', isAdmin: false }
   const [user, setUser] = useState(EMPTY_USER)
+  const { graphql } = useHttp()
 
   async function create(e) {
     e.preventDefault()

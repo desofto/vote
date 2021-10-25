@@ -4,14 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import actions from 'actions'
 
 import NewEvent from './NewEvent'
+import { useHttp } from 'utils/http'
 
 function Events({ onSelect }) {
   const events = useSelector(store => store.events)
   const dispatch = useDispatch()
+  const { request } = useHttp()
 
   useEffect(() => {
-    actions.events.load(dispatch)()
-  }, [dispatch])
+    actions.events.load(dispatch, request)()
+  }, [dispatch, request])
 
   function openEvent(e, event) {
     e.preventDefault()
@@ -19,7 +21,7 @@ function Events({ onSelect }) {
   }
 
   async function remove(id) {
-    await actions.events.remove(dispatch)(id)
+    await actions.events.remove(dispatch, request)(id)
   }
 
   return (
